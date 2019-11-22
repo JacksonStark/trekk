@@ -8,6 +8,10 @@ import {
   ViroARScene,
   ViroText,
   ViroConstants,
+  ViroARTrackingTargets,
+  ViroARImageMarker,
+  ViroFlexView,
+  ViroBox
 } from 'react-viro';
 
 export default function HelloWorldSceneAR(props) {
@@ -22,12 +26,29 @@ export default function HelloWorldSceneAR(props) {
     }
   }
 
-    return (
-      <ViroARScene onTrackingUpdated={onInitialized} >
-      {/* VIRO TEXTBOX (Width, Height) */}
-        <ViroText width={2} height={2} text={text} scale={[0.5, 0.5, 0.5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
-      </ViroARScene>
-    );
+  ViroARTrackingTargets.createTargets({
+    "targetOne" : {
+      source : require('./res/rubber-duck.jpg'),
+      orientation : "Up",
+      physicalWidth : 0.1 // real world width in meters
+    },
+  });
+
+  return (
+    <ViroARScene onTrackingUpdated={onInitialized} >
+    {/* VIRO TEXTBOX (Width, Height) */}
+      <ViroARImageMarker target={"targetOne"}>
+        {/* <ViroBox position={[0, .25, 0]} scale={[1, 1, 1]} /> */}
+        {/* <ViroNode position={[0, .25, 0]}> */}
+        <ViroFlexView height={2} width={2}>
+          <ViroText width={2} height={2} text={text} scale={[0.5, 0.5, 0.5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
+        </ViroFlexView>
+          {/* <ViroBox position={[0, .25, 0]} scale={[.5, .5, .5]} /> */}
+        {/* </ViroNode> */}
+      </ViroARImageMarker>
+    </ViroARScene>
+  );
+
 
 }
 
