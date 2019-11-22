@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import {StyleSheet} from 'react-native';
 
@@ -10,38 +10,25 @@ import {
   ViroConstants,
 } from 'react-viro';
 
-export default class HelloWorldSceneAR extends Component {
+export default function HelloWorldSceneAR(props) {
+  const [text, setText] = useState("Initializing AR...")
 
-  constructor() {
-    super();
-
-    // Set initial state here
-    this.state = {
-      text : "Initializing AR..."
-    };
-
-    // bind 'this' to functions
-    this._onInitialized = this._onInitialized.bind(this);
-  }
-
-  render() {
-    return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
-      {/* VIRO TEXTBOX (Width, Height) */}
-        <ViroText width={2} height={2} text={this.state.text} scale={[0.5, 0.5, 0.5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
-      </ViroARScene>
-    );
-  }
-
-  _onInitialized(state, reason) {
+  const onInitialized = (state, reason) => {
+    console.log('STATE', state)
     if (state == ViroConstants.TRACKING_NORMAL) {
-      this.setState({
-        text : "Jackson, Frank, Adam!"
-      });
+      setText('Jackson, Frank, Adam')
     } else if (state == ViroConstants.TRACKING_NONE) {
       // Handle loss of tracking
     }
   }
+
+    return (
+      <ViroARScene onTrackingUpdated={onInitialized} >
+      {/* VIRO TEXTBOX (Width, Height) */}
+        <ViroText width={2} height={2} text={text} scale={[0.5, 0.5, 0.5]} position={[0, 0, -1]} style={styles.helloWorldTextStyle} />
+      </ViroARScene>
+    );
+
 }
 
 var styles = StyleSheet.create({
