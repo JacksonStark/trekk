@@ -12,6 +12,7 @@ import {
   AppRegistry,
   Text,
   View,
+  ImageBackground,
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
@@ -69,13 +70,14 @@ export default function ViroSample(props) {
   const getARNavigator = () => {
     return (
       <>
-       <View style={{height: 200}}>
-        <Text>
-          FINAL PROJECT!!!!!!
+      <ImageBackground style={{height: 150}} source={require('./js/res/Beach.jpg')}>
+        <Text style={localStyles.headerText}>
+          Jackson, Frank, Adam
         </Text>
-      </View>
+      </ImageBackground>
       <ViroARSceneNavigator 
       // {...this.state.sharedProps}
+        numberOfTrackedImages={1}
         initialScene={{scene: InitialARScene}} />
       </>
     );
@@ -118,6 +120,13 @@ var localStyles = StyleSheet.create({
     flexDirection: 'column',
     alignItems:'center',
     backgroundColor: "black",
+  },
+  headerText: {
+    paddingTop: 60,
+    fontSize: 33,
+    textAlign:'center',
+    fontStyle: 'italic',
+    fontWeight: 'bold'
   },
   titleText: {
     paddingTop: 30,
