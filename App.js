@@ -45,7 +45,7 @@ export default function ViroSample(props) {
   // const [sharedProps, setSharedProps] = useState(sharedProps);
 
   // Presents the user with a choice of an AR or VR experience
-  const getExperienceSelector = () => {
+  const getExperience = () => {
     return (
       <View style={localStyles.outer} >
         <View style={localStyles.inner} >
@@ -55,7 +55,7 @@ export default function ViroSample(props) {
           </Text>
 
           <TouchableHighlight style={localStyles.buttons}
-            onPress={getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
+            onPress={getExperienceButton(AR_NAVIGATOR_TYPE)}
             underlayColor={'#68a0ff'} >
 
             <Text style={localStyles.buttonText}>AR</Text>
@@ -77,15 +77,12 @@ export default function ViroSample(props) {
       </ImageBackground>
       <ViroARSceneNavigator 
       // {...this.state.sharedProps}
-        numberOfTrackedImages={1}
         initialScene={{scene: InitialARScene}} />
       </>
     );
   }
 
-  // This function returns an anonymous/lambda function to be used
-  // by the experience selector buttons
-  const getExperienceButtonOnPress = (navigatorType) => {
+  const getExperienceButton = (navigatorType) => {
     return () => {
       setNavigatorType(navigatorType)
     }
@@ -97,7 +94,7 @@ export default function ViroSample(props) {
   }
 
   if (navigatorType == UNSET) {
-    return getExperienceSelector();
+    return getExperience();
   } else if (navigatorType == AR_NAVIGATOR_TYPE) {
     return getARNavigator();
   }

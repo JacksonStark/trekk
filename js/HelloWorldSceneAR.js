@@ -16,9 +16,14 @@ import {
   ViroNode,
   ViroVideo,
   Viro3DObject,
-  ViroAmbientLight
+  ViroAmbientLight,
+  ViroDirectionalLight,
+  ViroAnimations
 } from 'react-viro';
 
+ViroAnimations.registerAnimations({
+  loopRotate: {properties: {rotateZ: "+=45"}, duration: 250},
+});
 
 const userMarkers = [
   {
@@ -104,9 +109,13 @@ export default function HelloWorldSceneAR(props) {
 
       <ViroARImageMarker key={currentMarker} target={currentMarker} onAnchorUpdated={((anchor) => onAnchorUpdated(anchor, currentMarker))}>
 
+        <ViroDirectionalLight color="#FFFFFF" direction={[0, -1, 0]} shadowOrthographicPosition={[0, 3, -5]} shadowOrthographicSize={10}
+          shadowNearZ={2} shadowFarZ={9} castsShadow={true} />
+
         <ViroAmbientLight color='#ffffff' />
 
-        <Viro3DObject rotation={[-90, 0, 0]} source={require('./res/object_star_anim.vrx')} position={[0, 0, 0.15]} scale={[0.05, 0.05, 0.05]} type="VRX" onClick={(anchor) => onClick(anchor, currentMarker)} />
+        <Viro3DObject rotation={[-90, 0, 0]} source={require('./res/object_star_anim.vrx')} position={[0, 0, 0.15]} scale={[0.05, 0.05, 0.05]} 
+          type="VRX" onClick={(anchor) => onClick(anchor, currentMarker)} animation={{name:'loopRotate', run:true, loop:true}} />
 
         <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
           {marker.spawnedDescription && (
