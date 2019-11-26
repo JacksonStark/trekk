@@ -1,24 +1,70 @@
-import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import React, { useState } from 'react';
+import { 
+  Text, 
+  View, 
+  StyleSheet,
+  TextInput,
+  Button,
+  ImageBackground
+ } from 'react-native';
 
-export default function LandingPage({transition, localStyles}) {
+
+export default function Register({transition}) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  
+  const collector = {}
+  
+  collector['email'] = email
+  collector['password'] = password
+  
+  console.log(collector)
 
   return (
-    <View style={localStyles.outer} >
-      <View style={localStyles.inner} >
+    <ImageBackground source={require("../res/Register-Background.jpg")} style={localStyles.outer}>
+    <ImageBackground style={localStyles.inner}>
 
-        <Text style={localStyles.titleText}>
-          Tap here to start your Trekk
-        </Text>
+          <Text>
+            Register
+          </Text>
 
-        <TouchableHighlight style={localStyles.buttons}
-          onPress={() => transition("AR_SCENE")}
-          underlayColor={'#68a0ff'} >
+          <TextInput
+            placeholder = "Enter e-mail."
+            onChangeText= {(email) => {setEmail(email)}}
+            value = {email}
+            style={localStyles.text}
+          />
 
-          <Text style={localStyles.buttonText}>AR</Text>
-        </TouchableHighlight>
+          <TextInput 
+            placeholder = "Enter password."
+            onChangeText= {(password) => {setPassword(password)}}
+            value = {password}
+            style={localStyles.text}
+          />
 
-      </View>
-    </View>
+          <Button 
+            title = "Submit"
+            onPress={() => console.log(collector)}
+          />
+    </ImageBackground>
+  </ImageBackground>
   );
 }
+
+var localStyles = StyleSheet.create({
+  outer : {
+    flex : 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    backgroundColor: "white",
+  },
+  inner: {
+    flex : 1,
+    flexDirection: 'column',
+    alignItems:'center',
+  },
+  text: {
+    color:"black"
+  }
+})
