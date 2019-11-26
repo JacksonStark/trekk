@@ -1,24 +1,81 @@
-import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import React, { useState } from 'react';
+import { 
+  Text, 
+  View, 
+  TouchableHighlight, 
+  StyleSheet,
+  TextInput,
+  Button,
+  ImageBackground
+ } from 'react-native';
 
-export default function LandingPage({transition, localStyles}) {
+export default function Create({transition}) {
+
+  const [name, setName] = useState('')
+  const [description, setDescription = useState('')]
 
   return (
-    <View style={localStyles.outer} >
-      <View style={localStyles.inner} >
+    <ImageBackground style={localStyles.outer}>
+      <View style={localStyles.inner}>
 
-        <Text style={localStyles.titleText}>
-          Tap here to start your Trekk
-        </Text>
+          <Text>
+            Create New Trekk
+          </Text>
 
-        <TouchableHighlight style={localStyles.buttons}
-          onPress={() => transition("AR_SCENE")}
-          underlayColor={'#68a0ff'} >
+          <Text>
+            Name:
+          </Text>
+          
+          <TextInput
+            placeholder = "Name of Trekk"
+            onChangeText= {(n) => {setName(n)}}
+            style={localStyles.text}
+          />
 
-          <Text style={localStyles.buttonText}>AR</Text>
-        </TouchableHighlight>
+          <Text>
+            Description:
+          </Text>
+          
+          <TextInput
+            placeholder = "Description of Trekk"
+            onChangeText= {(n) => {setDescription(n)}}
+            style={localStyles.text}
+          />
 
-      </View>
+          <Text>
+            Current Markers:
+          </Text>
+
+          <Text>
+            There are currently no markers in this Trekk.
+          </Text>
+
+          <Button
+          title = "Add New Marker"
+          />
+
+          <Button
+          title = "Create Trekk"
+          />
+
     </View>
+  </ImageBackground>
   );
 }
+
+var localStyles = StyleSheet.create({
+  outer : {
+    flex : 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    backgroundColor: "white",
+  },
+  inner: {
+    flex : 1,
+    flexDirection: 'column',
+    alignItems:'center',
+  },
+  text: {
+    color:"black"
+  }
+})
