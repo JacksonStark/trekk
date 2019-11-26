@@ -1,103 +1,54 @@
-/**
- * Copyright (c) 2017-present, Viro, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
 import React, { useState } from 'react';
 import {
-  AppRegistry,
-  Text,
-  View,
-  ImageBackground,
   StyleSheet,
-  PixelRatio,
-  TouchableHighlight,
 } from 'react-native';
 
-import {
-  ViroARSceneNavigator
-} from 'react-viro';
+import LandingPage from './js/components/landing-page.js'
+import Login from './js/components/login.js'
+import Register from './js/components/register.js'
+import Dashboard from './js/components/dashboard.js'
+import Create from './js/components/create.js'
+import Edit from './js/components/edit.js'
+import AddMarker from './js/components/add-marker.js'
+import ArScene from './js/components/ar-scene.js'
 
-/*
- TODO: Insert your API key below
- */
-// var sharedProps = {
-//   apiKey:"API_KEY_HERE",
-// }
+const LANDING_PAGE = "LANDING_PAGE";
+const LOGIN = "LOGIN";
+const REGISTER = "REGISTER";
+const DASHBOARD = "DASHBOARD";
+const CREATE = "CREATE";
+const EDIT = "EDIT";
+const ADD_MARKER = "ADD_MARKER"
+const AR_SCENE = "AR_SCENE"
 
-// Sets the default scene you want for AR and VR
-const InitialARScene = require('./js/HelloWorldSceneAR');
+export default function ViroSample() {
 
-const UNSET = "UNSET";
+  const [mode, setMode] = useState(LANDING_PAGE)
+  const [history, setHistory] = useState([LANDING_PAGE]);
 
-const AR_NAVIGATOR_TYPE = "AR";
-
-// This determines which type of experience to launch in, or UNSET, if the user should
-// be presented with a choice of AR or VR. By default, we offer the user a choice.
-const defaultNavigatorType = UNSET;
-
-export default function ViroSample(props) {
-  const [navigatorType, setNavigatorType] = useState(defaultNavigatorType);
-  // const [sharedProps, setSharedProps] = useState(sharedProps);
-
-  // Presents the user with a choice of an AR or VR experience
-  const getExperience = () => {
-    return (
-      <View style={localStyles.outer} >
-        <View style={localStyles.inner} >
-
-          <Text style={localStyles.titleText}>
-            Choose your desired experience:
-          </Text>
-
-          <TouchableHighlight style={localStyles.buttons}
-            onPress={getExperienceButton(AR_NAVIGATOR_TYPE)}
-            underlayColor={'#68a0ff'} >
-
-            <Text style={localStyles.buttonText}>AR</Text>
-          </TouchableHighlight>
-
-        </View>
-      </View>
-    );
-  }
-
-  // Returns the ViroARSceneNavigator which will start the AR experience
-  const getARNavigator = () => {
-    return (
-      <>
-      <ImageBackground style={{height: 150}} source={require('./js/res/Beach.jpg')}>
-        <Text style={localStyles.headerText}>
-          Jackson, Frank, Adam
-        </Text>
-      </ImageBackground>
-      <ViroARSceneNavigator 
-      // {...this.state.sharedProps}
-        initialScene={{scene: InitialARScene}} />
-      </>
-    );
-  }
-
-  const getExperienceButton = (navigatorType) => {
-    return () => {
-      setNavigatorType(navigatorType)
+  const transition = (nextMode, back = false) => {
+    if (back) {
+      let prevHistory = history.slice(0, -1);
+      setHistory(prevHistory)
+      setMode(prevHistory[prevHistory.length - 1]);
+    } else {
+      setMode(nextMode);
+      setHistory([...history, nextMode]);
     }
-  }
+  } 
 
-  // This function "exits" Viro by setting the navigatorType to UNSET.
-  const exitViro = () => {
-    setNavigatorType(UNSET)
-  }
-
-  if (navigatorType == UNSET) {
-    return getExperience();
-  } else if (navigatorType == AR_NAVIGATOR_TYPE) {
-    return getARNavigator();
-  }
+  return (
+    <>
+      {mode === LANDING_PAGE && (<LandingPage transition = {transition} localStyles = {localStyles} />)}
+      {mode === LOGIN && (<Login transition = {transition} />)}
+      {mode === REGISTER && (<Register transition = {transition} localStyles = {localStyles} />)}
+      {mode === DASHBOARD && (<Dashboard transition = {transition} localStyles = {localStyles} />)}
+      {mode === CREATE && (<Create transition = {transition} localStyles = {localStyles} />)}
+      {mode === EDIT && (<Edit transition = {transition} localStyles = {localStyles} />)}
+      {mode === ADD_MARKER && (<AddMarker transition = {transition} localStyles = {localStyles} />)}
+      {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} />)}
+    </>
+  )
 
 }
 
@@ -163,4 +114,3 @@ var localStyles = StyleSheet.create({
   }
 });
 
-module.exports = ViroSample
