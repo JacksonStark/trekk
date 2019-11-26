@@ -12,7 +12,7 @@ export default function LandingPage({transition, localStyles}) {
         </Text>
 
         <TouchableHighlight style={localStyles.buttons}
-          onPress={() => transition("LOGIN")}
+          onPress={() => transition("REGISTER")}
           underlayColor={'#68a0ff'} >
 
           <Text style={localStyles.buttonText}>AR</Text>
