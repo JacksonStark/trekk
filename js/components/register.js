@@ -23,32 +23,37 @@ export default function Register({transition}) {
 
   return (
     <ImageBackground source={require("../res/Register-Background.jpg")} style={localStyles.outer}>
-    <ImageBackground style={localStyles.inner}>
+      <ImageBackground style={localStyles.inner}>
 
-          <Text>
-            Register
-          </Text>
+        <Text>
+          Register
+        </Text>
 
-          <TextInput
-            placeholder = "Enter e-mail."
-            onChangeText= {(email) => {setEmail(email)}}
-            value = {email}
-            style={localStyles.text}
-          />
+        <TextInput
+          placeholder = "Enter e-mail."
+          onChangeText= {(email) => {setEmail(email)}}
+          value = {email}
+          style={localStyles.text}
+        />
 
-          <TextInput 
-            placeholder = "Enter password."
-            onChangeText= {(password) => {setPassword(password)}}
-            value = {password}
-            style={localStyles.text}
-          />
+        <TextInput 
+          placeholder = "Enter password."
+          onChangeText= {(password) => {setPassword(password)}}
+          value = {password}
+          style={localStyles.text}
+        />
 
-          <Button 
-            title = "Submit"
-            onPress={() => console.log(collector)}
-          />
+        <Button 
+          title = "Enter"
+          onPress={() => transition("DASHBOARD")}
+        />
+
+        <Button 
+          title = "Back to Login"
+          onPress={() => transition("LOGIN", true)}
+        />
+      </ImageBackground>
     </ImageBackground>
-  </ImageBackground>
   );
 }
 

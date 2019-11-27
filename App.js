@@ -25,8 +25,11 @@ export default function ViroSample() {
 
   const [mode, setMode] = useState(LANDING_PAGE)
   const [history, setHistory] = useState([LANDING_PAGE]);
+  const [currentProps, setCurrentProps] = useState({})
 
-  const transition = (nextMode, back = false) => {
+  props = {}
+
+  const transition = (nextMode, back = false, props) => {
     if (back) {
       let prevHistory = history.slice(0, -1);
       setHistory(prevHistory)

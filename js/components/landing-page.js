@@ -1,24 +1,76 @@
 import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { 
+  Text, 
+  TouchableHighlight,
+  ImageBackground,
+  StyleSheet 
+} from 'react-native';
 
-export default function LandingPage({transition, localStyles}) {
+export default function LandingPage({transition}) {
 
   return (
-    <View style={localStyles.outer} >
-      <View style={localStyles.inner} >
+    <ImageBackground source={require('../res/northern-lights.jpg')} style={localStyles.outer} >
+      <ImageBackground style={localStyles.inner} >
 
         <Text style={localStyles.titleText}>
           Tap here to start your Trekk
         </Text>
 
         <TouchableHighlight style={localStyles.buttons}
-          onPress={() => transition("REGISTER")}
-          underlayColor={'#68a0ff'} >
+          onPress={() => transition("LOGIN")}
+        >
 
-          <Text style={localStyles.buttonText}>AR</Text>
+        <Text style={localStyles.buttonText}>AR</Text>
         </TouchableHighlight>
 
-      </View>
-    </View>
+      </ImageBackground>
+    </ImageBackground>
   );
 }
+
+var localStyles = StyleSheet.create({
+  outer : {
+    flex : 1,
+    flexDirection: 'row',
+    alignItems:'center',
+  },
+  inner: {
+    flex : 1,
+    flexDirection: 'column',
+    alignItems:'center',
+  },
+  text: {
+    marginTop: 20,
+    color: "white",
+    fontSize: 30,
+    fontStyle: "italic",
+  },
+
+  titleText: {
+    color: "cyan",
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: 40,
+    marginBottom: 20,
+    alignItems: 'center'
+  },
+  buttonText: {
+    backgroundColor:'#68a0ff',
+    textAlign:'center',
+    fontSize : 33,
+    // paddingTop: 10,
+    borderColor: "black",
+  },
+  buttons : {
+    height: 80,
+    width: 150,
+    paddingTop:20,
+    paddingBottom:20,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor:'#68a0cf',
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: 'black',
+  },
+})

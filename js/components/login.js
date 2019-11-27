@@ -25,29 +25,33 @@ export default function Login({transition}) {
   return (
     <ImageBackground style={localStyles.outer}>
       <View style={localStyles.inner}>
+        <Text>
+          Login
+        </Text>
 
-          <Text>
-            Login
-          </Text>
+        <TextInput
+          placeholder = "Enter your e-mail."
+          onChangeText= {(email) => {setEmail(email)}}
+          value = {email}
+          style={localStyles.text}
+        />
 
-          <TextInput
-            placeholder = "Enter your e-mail."
-            onChangeText= {(email) => {setEmail(email)}}
-            value = {email}
-            style={localStyles.text}
-          />
+        <TextInput 
+          placeholder = "Enter your password."
+          onChangeText= {(password) => {setPassword(password)}}
+          value = {password}
+          style={localStyles.text}
+        />
 
-          <TextInput 
-            placeholder = "Enter your password."
-            onChangeText= {(password) => {setPassword(password)}}
-            value = {password}
-            style={localStyles.text}
-          />
+        <Button 
+          title = "Enter"
+          onPress={() => transition("DASHBOARD")}
+        />
 
-          <Button 
-            title = "Enter"
-            onPress={() => console.log(collector)}
-          />
+        <Button 
+          title = "Register"
+          onPress={() => transition("REGISTER")}
+        />
     </View>
   </ImageBackground>
   );

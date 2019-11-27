@@ -23,7 +23,7 @@ export default function Dashboard({transition}) {
   trekks = trekTitles.map((trek) => {
     return (
       <>
-        <Text style={localStyles.text}>
+        <Text style={localStyles.text} onPress={() => transition("AR_SCENE")}>
           {trek.title}
         </Text>
         <Button
@@ -66,10 +66,9 @@ var localStyles = StyleSheet.create({
     fontSize: 30,
     fontStyle: "italic",
   },
-
   titleText: {
     color: "cyan",
     fontSize: 50,
     marginBottom: 20,
-  }
+  },
 })
