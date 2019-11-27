@@ -1,24 +1,83 @@
-import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import React, { useState } from 'react';
+import { 
+  Text, 
+  View, 
+  TouchableHighlight, 
+  StyleSheet,
+  TextInput,
+  Button,
+  ImageBackground,
+  Image
+ } from 'react-native';
 
-export default function LandingPage({transition, localStyles}) {
+export default function AddMarker({transition}) {
+
+  const [text, setText] = useState('')
 
   return (
-    <View style={localStyles.outer} >
-      <View style={localStyles.inner} >
+    <ImageBackground style={localStyles.outer}>
+      <View style={localStyles.inner}>
 
-        <Text style={localStyles.titleText}>
-          Tap here to start your Trekk
-        </Text>
+          <Text>
+            Create New Marker
+          </Text>
 
-        <TouchableHighlight style={localStyles.buttons}
-          onPress={() => transition("AR_SCENE")}
-          underlayColor={'#68a0ff'} >
+          <Text>
+            Marker Image:
+          </Text>
 
-          <Text style={localStyles.buttonText}>AR</Text>
-        </TouchableHighlight>
+          <Button
+          title = "Upload Image"
+          />
 
-      </View>
+          <Text>
+            Text To Display:
+          </Text>
+          
+          <TextInput
+            placeholder = "Name of Trekk"
+            onChangeText= {(n) => {setText(n)}}
+            style={localStyles.text}
+          />
+
+          <Text>
+            Image To Display:
+          </Text>
+
+          <Button
+          title = "Upload Image"
+          />
+
+          <Text>
+            Video To Display:
+          </Text>
+
+          <Button
+          title = "Upload Video"
+          />
+
+          <Button
+          title = "Create Marker"
+          />
+
     </View>
+  </ImageBackground>
   );
 }
+
+var localStyles = StyleSheet.create({
+  outer : {
+    flex : 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    backgroundColor: "white",
+  },
+  inner: {
+    flex : 1,
+    flexDirection: 'column',
+    alignItems:'center',
+  },
+  text: {
+    color:"black"
+  }
+})
