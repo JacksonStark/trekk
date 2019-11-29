@@ -45,7 +45,6 @@ var localStyles = StyleSheet.create({
     fontSize: 30,
     fontStyle: "italic",
   },
-
   titleText: {
     color: "cyan",
     fontStyle: "italic",
