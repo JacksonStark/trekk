@@ -1,24 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   StyleSheet, SwipeableListView,
 } from 'react-native';
 import axios from 'axios';
+
+import reducer, {
+  SET_USER,
+  SET_USER_TREKKS,
+  SET_TREKK,
+  SET_MARKERS
+} from './js/reducer/app-reducer.js'
 
 import LandingPage from './js/components/landing-page.js'
 import Login from './js/components/login.js'
 import Register from './js/components/register.js'
 import Dashboard from './js/components/dashboard.js'
 import CreateEdit from './js/components/create-edit.js'
-// import Edit from './js/components/edit.js'
 import AddMarker from './js/components/add-marker.js'
 import ArScene from './js/components/ar-scene.js'
+
 
 const LANDING_PAGE = "LANDING_PAGE";
 const LOGIN = "LOGIN";
 const REGISTER = "REGISTER";
 const DASHBOARD = "DASHBOARD";
 const CREATE_EDIT = "CREATE_EDIT";
-// const EDIT = "EDIT";
 const ADD_MARKER = "ADD_MARKER"
 const AR_SCENE = "AR_SCENE"
 
@@ -27,14 +33,15 @@ export default function ViroSample() {
   const [mode, setMode] = useState(LANDING_PAGE);
   const [history, setHistory] = useState([LANDING_PAGE]);
 
-  // REDUCER STATES
-  const [currentUser, setCurrentUser] = useState("");
-  const [userTrekks, setUserTrekks] = useState([]);
-  const [currentTrekk, setCurrentTrekk] = useState("");
-  const [currentMarkers, setCurrentMarkers] = useState("");
+  const [state, dispatch] = useReducer(reducer, {
+    currentUser: "",
+    userTrekks: [],
+    currentTrekk: "",
+    currentMarkers: ""
+  })
 
 
-  const transition = (nextMode, back = false, props) => {
+  const transition = (nextMode, back = false) => {
     if (back) {
       let prevHistory = history.slice(0, -1);
       setHistory(prevHistory)
@@ -45,55 +52,37 @@ export default function ViroSample() {
     }
   } 
 
-  // console.log('IN (app.js): ', currentUser)
-
   
   useEffect(() => {
 
-    if (currentUser && !currentTrekk) {
-      axios.get(`http://trekk.herokuapp.com/trekks/${currentUser}`)
+    if (state.currentUser && !state.currentTrekk.id) {
+      axios.get(`http://trekk.herokuapp.com/trekks/${state.currentUser}`)
       .then((res) => {
-        // console.log('IN CURRENTUSER USE-EFFECT: ', res.data)
-        setUserTrekks(res.data.trekks)
+        dispatch({type:SET_USER_TREKKS, value: res.data.trekks})
         transition('DASHBOARD')
       })
     }
 
-    if (currentTrekk && currentUser) {
-      axios.get(`http://trekk.herokuapp.com/markers/${currentTrekk}`)
-      .then((res) => {
-        // console.log('IN CURRENT-TREKK USE-EFFECT: ', res.data)
-        setCurrentMarkers(res.data.markers)
-        transition('CREATE_EDIT')
-      })
-    }
-
-    // if (currentMarkers && currentUser && currentMarkers) {
-    //   axios.get(`http://trekk.herokuapp.com/markers/${currentTrekk}`)
+    // if (state.currentTrekk.id && state.currentUser) {
+    //   axios.get(`http://trekk.herokuapp.com/markers/${state.currentTrekk.id}`)
     //   .then((res) => {
-    //     console.log('IN CURRENT-POINTS USE-EFFECT: ', res.data)
-    //     setCurrentMarkers(res.data.markers)
+    //     dispatch({type:SET_MARKERS, value: res.data.markers})
+    //     transition('CREATE_EDIT')
     //   })
     // }
-
-    // if (currentPoint) {
-    //   axios.get(`http://trekk.herokuapp.com/trekks/${currentUser}`)
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     setCurrentPoint(res.data.trekks)
-    //   })
-    // }
-
-  }, [currentUser, currentTrekk])
+  }, [state.currentUser])
 
   const switchUser = (id) => {
-    setCurrentUser(id)
-    // transition('DASHBOARD')
+    dispatch({type:SET_USER, value: id})
   }
 
-  const switchTrekk = (id) => {
-    // requestedTrekk = userTrekks[id]
-    setCurrentTrekk(id)
+  const switchTrekk = (trekk, destination) => {
+    axios.get(`http://trekk.herokuapp.com/markers/${trekk.id}`)
+    .then((res) => {
+      dispatch({type: SET_TREKK, value: trekk})
+      dispatch({type: SET_MARKERS, value: res.data.markers})
+      transition(destination);
+    })
   }
 
   const goToAddMarker = () => {
@@ -101,14 +90,33 @@ export default function ViroSample() {
   }
 
   const addMarker = (marker_image, spawned_description, spawned_image, spawned_video, trekk_id) => {
+    console.log("add marker consoles:", marker_image, spawned_description, spawned_image, spawned_video, trekk_id)
     axios.post(`http://trekk.herokuapp.com/markers/create?marker_image=${marker_image}&spawned_description=${spawned_description}&spawned_image=${spawned_image}&spawned_video=${spawned_video}&trekk_id=${trekk_id}`)
     .then((res) => {
-      let returnedMarker = res.data.marker
-      // setCurrentMarkers((prev) => ({...prev, returnedMarker}))
-      setCurrentMarkers([...currentMarkers, returnedMarker])
-      // console.log('RETURNED MARKER: ', currentMarkers)
+      console.log(res.data)
+      dispatch({type: SET_MARKERS, value: res.data.markers})
       res.data.bool ? transition('CREATE_EDIT', true) : null
     })
+  }
+
+  const addTrekk = (name) => {
+    axios.post(`http://trekk.herokuapp.com/trekks/create?user_id=${state.currentUser}&name=${name}`)
+      .then((res) => {
+        console.log(res)
+        data = {
+          id: res.data.trekk_id,
+          name: res.data.name
+        }
+        dispatch({type: SET_TREKK, value: data})
+        transition('CREATE_EDIT')
+    })
+  }
+  console.log('CURRENT TREKK ID: ', state.currentTrekk)
+
+  const refreshDashboard = () => {
+    dispatch({type: SET_TREKK, value: ""})
+    dispatch({type: SET_MARKERS, value: ""})
+    transition("DASHBOARD")
   }
 
 
@@ -117,11 +125,11 @@ export default function ViroSample() {
       {mode === LANDING_PAGE && (<LandingPage transition = {transition} localStyles = {localStyles} />)}
       {mode === LOGIN && (<Login transition = {transition} switchUser= {switchUser} />)}
       {mode === REGISTER && (<Register transition = {transition} localStyles = {localStyles} />)}
-      {mode === DASHBOARD && (<Dashboard switchTrekk = {switchTrekk} transition = {transition} localStyles = {localStyles} userTrekks = {userTrekks} />)}
-      {mode === CREATE_EDIT && (<CreateEdit goToAddMarker= {goToAddMarker} currentMarkers = {currentMarkers} transition = {transition} localStyles = {localStyles} currentUser = {currentUser} currentTrekk = {currentTrekk} />)}
+      {mode === DASHBOARD && (<Dashboard addTrekk = {addTrekk} switchTrekk = {switchTrekk} transition = {transition} localStyles = {localStyles} userTrekks = {state.userTrekks} />)}
+      {mode === CREATE_EDIT && (<CreateEdit goToAddMarker= {goToAddMarker} currentMarkers = {state.currentMarkers} refreshDashboard = {refreshDashboard} localStyles = {localStyles} currentUser = {state.currentUser} currentTrekk = {state.currentTrekk} />)}
       {/* {mode === EDIT && (<Edit transition = {transition} localStyles = {localStyles} />)} */}
-      {mode === ADD_MARKER && (<AddMarker addMarker = {addMarker} transition = {transition} currentTrekk = {currentTrekk} localStyles = {localStyles} />)}
-      {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} />)}
+      {mode === ADD_MARKER && (<AddMarker addMarker = {addMarker} transition = {transition} currentTrekk = {state.currentTrekk.id} localStyles = {localStyles} />)}
+      {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} userMarkers = {state.currentMarkers} />)}
     </>
   )
 

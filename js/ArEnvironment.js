@@ -25,48 +25,33 @@ ViroAnimations.registerAnimations({
   loopRotate: {properties: {rotateZ: "+=45"}, duration: 250},
 });
 
-const userMarkers = [
-  {
-    id: 1,
-    markerImage: 'https://img.ev.mu/images/regions/91/600x400/91.jpg',
-    spawnedDescription: "This is Guadalupe. TITS",
-    spawnedImage: null,
-    spawnedVideo: null
-  },
-  {
-    id: 2,
-    markerImage: 'https://img.ev.mu/images/attractions/1336/600x400/1851.jpg',
-    spawnedDescription: null,
-    spawnedImage: "http://static.pokemonpets.com/images/monsters-images-800-800/81-Magnemite.png",
-    spawnedVideo: null
-  },
-  {
-    id: 3,
-    markerImage: 'https://www.kitchentreaty.com/wp-content/uploads/2017/02/how-to-make-heart-shaped-pizzas-featured-660x430.jpg',
-    spawnedDescription: null,
-    spawnedImage: null,
-    spawnedVideo: 'https://v.ftcdn.net/02/29/37/75/700_F_229377542_Y4dQ5kuAj6FPafId0XIdZ9jKcDQykYF8_ST.mp4'
-  },
-]
+// const userMarkers = [
+//   {
+//     id: 1,
+//     markerImage: 'https://img.ev.mu/images/regions/91/600x400/91.jpg',
+//     spawnedDescription: "This is Guadalupe. TITS",
+//     spawnedImage: null,
+//     spawnedVideo: null
+//   },
+// ]
 
 let cameraPos;
 
-export default function ArEnvironment(props) {
-  const [text, setText] = useState("Initializing AR...")
-  // const [show, setShow] = useState(false)
+export default function ArEnvironment({sceneNavigator}) {
+  // const [text, setText] = useState("Initializing AR...")
   const [visibility, setVisibility] = useState({})
 
-  const onInitialized = (state, reason) => {
-    if (state == ViroConstants.TRACKING_NORMAL) {
-      setText('Hi there! Welcome to Jackson, Frank, and Adam\'s AR tour. Have fun and give feedback!')
-    } else if (state == ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
-    }
-  }
+  // const onInitialized = (state, reason) => {
+  //   if (state == ViroConstants.TRACKING_NORMAL) {
+  //     setText('Hi there! Welcome to Jackson, Frank, and Adam\'s AR tour. Have fun and give feedback!')
+  //   } else if (state == ViroConstants.TRACKING_NONE) {
+  //     Handle loss of tracking
+  //   }
+  // }
 
   const onAnchorUpdated = (anchor, currentMarker) => {
 
-    console.log('Marker--Camera Distance', Math.abs(anchor.position[2] - cameraPos[2]))
+    // console.log('Marker--Camera Distance', Math.abs(anchor.position[2] - cameraPos[2]))
 
   //   Math.abs(anchor.position[0] - cameraPos[0]) < 0.8 &&
   //   Math.abs(anchor.position[1] - cameraPos[1]) < 0.8 &&
@@ -90,13 +75,14 @@ export default function ArEnvironment(props) {
     // show ? setShow(false) : setShow(true)
   }
 
-  const imageMarkers = userMarkers.map((marker, index) => {
+  const imageMarkers = sceneNavigator.viroAppProps.map((marker, index) => {
+  // const imageMarkers = userMarkers.map((marker, index) => {
     let currentMarker = 'marker' + index
 
     let targetObj = {}
 
     targetObj[currentMarker] = {
-    source : {uri: marker.markerImage},
+    source : {uri: marker.marker_image},
     orientation : "Up",
     physicalWidth : 0.2, // real world width in meters
     }
@@ -118,16 +104,16 @@ export default function ArEnvironment(props) {
           type="VRX" onClick={(anchor) => onClick(anchor, currentMarker)} animation={{name:'loopRotate', run:true, loop:true}} />
 
         <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
-          {marker.spawnedDescription && (
-            <ViroText text={marker.spawnedDescription} scale={[0.3, 0.3, 0.3]} position={[0, 0, -0.1]} style={styles.viroText} />
+          {marker.spawned_description !== "" && (
+            <ViroText text={marker.spawned_description} scale={[0.3, 0.3, 0.3]} position={[0, 0, -0.1]} style={styles.viroText} />
           )}
 
-          {marker.spawnedImage && (
-            <ViroImage position={[0,0,0]} scale={[0.3, 0.3, 0.3]} source={{uri: marker.spawnedImage}} resizeMode={'ScaleToFill'} />
+          {marker.spawned_image !== "" && (
+            <ViroImage position={[0,0,0]} scale={[0.3, 0.3, 0.3]} source={{uri: marker.spawned_image}} resizeMode={'ScaleToFill'} />
           )}
 
-          {marker.spawnedVideo && ( 
-            <ViroVideo height={0.8} width={1.4} source={{uri: marker.spawnedVideo}} loop={true} position={[0,0,0]} scale={[0.2, 0.2, 0.2]} volume={1} />
+          {marker.spawned_video !== "" && ( 
+            <ViroVideo height={0.8} width={1.4} source={{uri: marker.spawned_video}} loop={true} position={[0,0,0]} scale={[0.2, 0.2, 0.2]} volume={1} />
           )}
         </ViroNode>
 
@@ -137,12 +123,14 @@ export default function ArEnvironment(props) {
   })
 
   return (
-    <ViroARScene onTrackingUpdated={onInitialized} onCameraTransformUpdate={(e) => onCameraTransformUpdate(e)}>
+    <ViroARScene onCameraTransformUpdate={(e) => onCameraTransformUpdate(e)}>
       {imageMarkers}
     </ViroARScene>
   )
 
 }
+
+//onTrackingUpdated={onInitialized} 
 
 
 var styles = StyleSheet.create({

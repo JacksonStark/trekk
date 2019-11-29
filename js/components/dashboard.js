@@ -5,11 +5,16 @@ import {
   StyleSheet,
   Button,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  Dimensions
  } from 'react-native';
 
 
-export default function Dashboard({transition, userTrekks, switchTrekk}) {
+export default function Dashboard({transition, userTrekks, switchTrekk, addTrekk}) {
+
+  const [name, setName] = useState("");
   
   // trekTitles =  [
   //   {id: 0, title: 'The Beach' },
@@ -24,39 +29,55 @@ export default function Dashboard({transition, userTrekks, switchTrekk}) {
   trekks = userTrekks.map((trekk) => {
     return (
       <>
-        <Text style={localStyles.text} onPress = {() => transition('AR_SCENE')}>
+        <Text style={localStyles.text} onPress={() => switchTrekk(trekk, "AR_SCENE")}>
           {trekk.name}
         </Text>
         <Text style={localStyles.text}>
           {trekk.access_code}
         </Text>
-        <Button
-          title="Edit"
-          color="red"
-          // onPress={() => console.log('EDIT TREK', trekk.id)}
-          onPress={() => switchTrekk(trekk.id)}
-        />
+        <TouchableOpacity
+          // color="red"
+          onPress={() => switchTrekk(trekk, "CREATE_EDIT")}
+          // onPress={() => console.log(trekk.id)}
+
+        >
+        <Text style={localStyles.text}>Edit</Text>
+        </TouchableOpacity>
       </>
     )
   })
 
   return (
-    <ImageBackground source={require('../res/northern-lights.jpg')} style={localStyles.outer}>
-      <ImageBackground style={localStyles.inner}>
+    <View style={localStyles.outer}>
+
+      <ImageBackground source={require('../res/northern-lights.jpg')}
+        style = {localStyles.background} />
+
+
+      <ScrollView contentContainerStyle={localStyles.inner}>
         <Text style={localStyles.titleText}>
           My trekks
         </Text>
 
         {trekks}
 
+
+        <TextInput 
+          placeholder = "Enter your Trekk name."
+          onChangeText= {(name) => {setName(name)}}
+          value = {name}
+          placeholderTextColor = "white"
+          style = {localStyles.text}
+        />
+
         <TouchableOpacity 
-          // onPress={() => switchTrekk()}
+          onPress={() => addTrekk(name)}
           style = {localStyles.buttons}
         >
         <Text style = {localStyles.buttonText}>Create</Text>
         </TouchableOpacity>
-    </ImageBackground>
-  </ImageBackground>
+    </ScrollView>
+  </View>
 
   );
 }
@@ -69,9 +90,19 @@ var localStyles = StyleSheet.create({
     backgroundColor: "white",
   },
   inner: {
-    flex : 1,
+    flexGrow : 1,
     flexDirection: 'column',
     alignItems:'center',
+    backgroundColor: "transparent",
+  },
+  background: {
+    width: Dimensions.get("window").width, //for full screen
+    height: Dimensions.get("window").height, //for full screen
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   },
   text: {
     marginTop: 20,
@@ -81,8 +112,12 @@ var localStyles = StyleSheet.create({
   },
   titleText: {
     color: "cyan",
-    fontSize: 50,
-    marginBottom: 20,
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: 80,
+    marginBottom: 80,
+    marginTop: 80,
+    alignItems: 'center'
   },
   buttonText: {
     // backgroundColor:'#68a0ff',
