@@ -1,24 +1,117 @@
-import React from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import React, { useState } from 'react';
+import { 
+  Text, 
+  View, 
+  TouchableHighlight, 
+  StyleSheet,
+  TextInput,
+  Button,
+  ImageBackground,
+  Image,
+  TouchableOpacity
+ } from 'react-native';
 
-export default function LandingPage({transition, localStyles}) {
+export default function AddMarker({transition, addMarker, currentTrekk}) {
+
+  const [text, setText] = useState('')
+  const [image, setImage] = useState('')
+  const [video, setVideo] = useState('')
+  const [markerImage, setMarkerImage] = useState('')
 
   return (
-    <View style={localStyles.outer} >
-      <View style={localStyles.inner} >
+    <ImageBackground style={localStyles.outer}>
+      <View style={localStyles.inner}>
 
-        <Text style={localStyles.titleText}>
-          Tap here to start your Trekk
-        </Text>
+          <Text>
+            Create New Marker
+          </Text>
 
-        <TouchableHighlight style={localStyles.buttons}
-          onPress={() => transition("AR_SCENE")}
-          underlayColor={'#68a0ff'} >
+          <Text>
+            Marker Image:
+          </Text>
 
-          <Text style={localStyles.buttonText}>AR</Text>
-        </TouchableHighlight>
+          <TextInput
+            placeholder = "Marker Image"
+            onChangeText= {(n) => {setMarkerImage(n)}}
+            style={localStyles.text}
+          />
 
-      </View>
+          <Text>
+            Text To Display:
+          </Text>
+          
+          <TextInput
+            placeholder = "Name of Trekk"
+            onChangeText= {(n) => {setText(n)}}
+            style={localStyles.text}
+          />
+
+          <Text>
+            Image To Display:
+          </Text>
+
+          <TextInput
+            placeholder = "Image to be Displayed"
+            onChangeText= {(n) => {setImage(n)}}
+            style={localStyles.text}
+          />
+
+          <Text>
+            Video To Display:
+          </Text>
+
+          <TextInput
+            placeholder = "Video to be Displayed"
+            onChangeText= {(n) => {setVideo(n)}}
+            style={localStyles.text}
+          />
+
+          <TouchableOpacity 
+          onPress={() => addMarker(markerImage, text, image, video, currentTrekk)}
+          style = {localStyles.buttons}
+          >
+            <Text style = {localStyles.buttonText}>Add Marker</Text>
+          </TouchableOpacity>
+
     </View>
+  </ImageBackground>
   );
 }
+
+var localStyles = StyleSheet.create({
+  outer : {
+    flex : 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    backgroundColor: "white",
+  },
+  inner: {
+    flex : 1,
+    flexDirection: 'column',
+    alignItems:'center',
+  },
+  text: {
+    color:"black"
+  },
+  buttonText: {
+    // backgroundColor:'#68a0ff',
+    textAlign:'center',
+    fontSize : 22,
+    // fontWeight: 'bold',
+    fontStyle: "italic",
+    paddingTop: 5,
+    borderColor: "black",
+  },
+  buttons : {
+    height: 60,
+    width: 120,
+    paddingTop:10,
+    paddingBottom:5,
+    marginTop: 30,
+    // marginBottom: 10,
+    backgroundColor:'#01B0FF',
+    borderRadius: 40,
+    borderWidth: 3,
+    borderColor: 'black',
+  },
+})
