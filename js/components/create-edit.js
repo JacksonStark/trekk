@@ -2,51 +2,25 @@ import React, { useState } from 'react';
 import { 
   Text, 
   View, 
-  TouchableHighlight, 
   StyleSheet,
   TextInput,
   Button,
   ImageBackground,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  Dimensions
  } from 'react-native';
 
-export default function CreateEdit({transition, currentUser, currentTrekks, currentMarkers, goToAddMarker}) {
-
-  // const [name, setName] = useState('')
-
-  // const markersData = [
-  //   {
-  //     id: 1,
-  //     name: 'Tits',
-  //     markerImage: 'https://img.ev.mu/images/regions/91/600x400/91.jpg',
-  //     spawnedDescription: "This is Guadalupe. TITS",
-  //     spawnedImage: null,
-  //     spawnedVideo: null
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Magnemite',
-  //     markerImage: 'https://img.ev.mu/images/attractions/1336/600x400/1851.jpg',
-  //     spawnedDescription: null,
-  //     spawnedImage: "http://static.pokemonpets.com/images/monsters-images-800-800/81-Magnemite.png",
-  //     spawnedVideo: null
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Fireworks',
-  //     markerImage: 'https://www.kitchentreaty.com/wp-content/uploads/2017/02/how-to-make-heart-shaped-pizzas-featured-660x430.jpg',
-  //     spawnedDescription: null,
-  //     spawnedImage: null,
-  //     spawnedVideo: 'https://v.ftcdn.net/02/29/37/75/700_F_229377542_Y4dQ5kuAj6FPafId0XIdZ9jKcDQykYF8_ST.mp4'
-  //   }
-  // ]
-
-  const markers = currentMarkers.map((marker) => {
+export default function CreateEdit({refreshDashboard, currentUser, currentTrekk, currentMarkers, goToAddMarker}) {
+  console.log('CURRENT TREKK (create-edit.js)', currentTrekk);
+  let markers = []
+  if (currentMarkers){
+  markers = currentMarkers.map((marker) => {
     console.log('IN CREATE-EDIT:', marker.spawned_description)
     return (
       <View>
-        <Text>
+        <Text style={localStyles.text}>
           Marker Image:
         </Text>
         <Image
@@ -55,57 +29,56 @@ export default function CreateEdit({transition, currentUser, currentTrekks, curr
         />
         <Text>
           {marker.spawned_description && (
-            <Text>Displays text.</Text>
+          <Text style={localStyles.text}>{"\n"}Displays text.{"\n"}</Text>
           )}
 
           {marker.spawned_image && (
-            <Text>Displays an image.</Text>
+            <Text style={localStyles.text}>Displays an image.{"\n"}</Text>
           )}
 
           {marker.spawned_video && ( 
-            <Text>Displays a video.</Text>
+            <Text style={localStyles.text}>Displays a video.{"\n"}</Text>
           )}
         </Text>
       </View>
     )
   })
+  }
 
   return (
-    <ImageBackground style={localStyles.outer}>
-      <View style={localStyles.inner}>
+    <View style={localStyles.outer}>
 
-          <Text>
-            Create New Trekk
-          </Text>
+      <ImageBackground source={require('../res/northern-lights.jpg')}
+        style = {localStyles.background} />
 
-          <Text>
-            Name:
-          </Text>
-          
-          <TextInput
-            placeholder = "Name of Trekk"
-            style={localStyles.text}
-          />
+      <ScrollView contentContainerStyle={localStyles.inner}>
 
-          <Text>
-            Current Markers:
-          </Text>
+        <Text style={localStyles.titleText}>
+          Edit {currentTrekk.name} Trekk
+        </Text>
 
-          {markers}
+        <Text style={localStyles.text}>
+          Current Markers:
+        </Text>
 
-          <TouchableOpacity 
-          onPress={() => goToAddMarker()}
-          style = {localStyles.buttons}
+        {markers}
+
+        <TouchableOpacity 
+        onPress={() => goToAddMarker()}
+        style = {localStyles.buttons}
         >
         <Text style = {localStyles.buttonText}>Add Marker</Text>
         </TouchableOpacity>
 
-          <Button
-          title = "Create Trekk"
-          />
+        <TouchableOpacity
+        onPress={() => refreshDashboard()}
+        style = {localStyles.buttons}
+        >
+          <Text style = {localStyles.buttonText}>Save</Text>
+        </TouchableOpacity>
 
-    </View>
-  </ImageBackground>
+    </ScrollView>
+  </View>
   );
 }
 
@@ -117,12 +90,34 @@ var localStyles = StyleSheet.create({
     backgroundColor: "white",
   },
   inner: {
-    flex : 1,
+    flexGrow : 1,
     flexDirection: 'column',
     alignItems:'center',
+    backgroundColor: "transparent",
+  },
+  background: {
+    width: Dimensions.get("window").width, //for full screen
+    height: Dimensions.get("window").height, //for full screen
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   },
   text: {
-    color:"black"
+    marginTop: 20,
+    color: "white",
+    fontSize: 30,
+    fontStyle: "italic",
+  },
+  titleText: {
+    color: "cyan",
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: 80,
+    marginBottom: 80,
+    marginTop: 80,
+    alignItems: 'center'
   },
   buttonText: {
     // backgroundColor:'#68a0ff',

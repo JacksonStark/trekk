@@ -18,6 +18,8 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
   const [video, setVideo] = useState('')
   const [markerImage, setMarkerImage] = useState('')
 
+  console.log("In add-markr", currentTrekk)
+
   return (
     <ImageBackground style={localStyles.outer}>
       <View style={localStyles.inner}>
