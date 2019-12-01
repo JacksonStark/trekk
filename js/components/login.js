@@ -8,7 +8,8 @@ import {
   Button,
   ImageBackground,
   ScrollView,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
  } from 'react-native';
  import axios from 'axios';
 
@@ -16,6 +17,9 @@ import {
 export default function Login({transition, switchUser}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState(""); 
+  const [loading, setLoading] = useState(false);
+
 
   const collector = {}
   
@@ -24,14 +28,18 @@ export default function Login({transition, switchUser}) {
   
   console.log('EMAIL: ', email, 'PASSWORD: ', password)
 
+    const validate = () => {
+      password ? null : setError("Please enter a password.")
+      email ? null : setError("Please enter an email.")
+      email && password ? checkUser() : null
+    }
+
     const checkUser = () => {
-      // axios.get(`http://192.168.88.16:3000/sessions/create?email=${email}&password=${password}`, {"Content-Type": "application/x-www-form-urlencoded",
+      setLoading(true)
       axios.get(`http://trekk.herokuapp.com/sessions/create?email=${email}&password=${password}`)
-      // Accept: "application/json"})
-      
       .then((res) => {
-        // console.log(res.data.user_id)
-        res.data.user_id ? switchUser(res.data.user_id) : null
+        setLoading(false)
+        res.data.user_id ? switchUser(res.data.user_id) : setError("Your email or password is invalid")
       })
       .catch(err => console.log(err))
     }
@@ -48,12 +56,20 @@ export default function Login({transition, switchUser}) {
           Login
         </Text>
 
+        { error ? (
+          <TouchableOpacity style={localStyles.errorBox}>
+            <Text style={localStyles.errorText}>{error}</Text>
+          </TouchableOpacity>)
+          : null }
+
+
         <TextInput
           placeholder = "Enter your e-mail."
           onChangeText= {(email) => {setEmail(email)}}
           value = {email}
           placeholderTextColor = "white"
           style = {localStyles.text}
+          onFocus={() => setError("")}
         />
 
         <TextInput 
@@ -62,14 +78,23 @@ export default function Login({transition, switchUser}) {
           value = {password}
           placeholderTextColor = "white"
           style = {localStyles.text}
+          secureTextEntry={true}
+          onFocus={() => setError("")}
         />
 
-        <TouchableOpacity 
-          onPress = {() => checkUser()}
-          style = {localStyles.buttons}
-        >
-        <Text style = {localStyles.buttonText}>Enter</Text>
-        </TouchableOpacity>
+        {loading ? 
+          <View style={{marginTop: 30, height: 60, width: 120 }}>
+            <ActivityIndicator size="large" color="white" /> 
+          </View>
+        : 
+          <TouchableOpacity 
+            onPress = {() => validate()}
+            style = {localStyles.buttons}
+          >
+          <Text style = {localStyles.buttonText}>Enter</Text>
+          </TouchableOpacity>
+         }
+
 
         <TouchableOpacity 
           onPress = {() => transition("REGISTER")}
@@ -105,11 +130,35 @@ var localStyles = StyleSheet.create({
     right: 0,
     bottom: 0
   },
+  loading: {
+    position: "absolute",
+    width: "50%",
+    bottom: "50%",
+    top: "50%"
+
+  },
   text: {
     marginTop: 20,
     color: "white",
     fontSize: 30,
     fontStyle: "italic",
+    shadowOffset: { width: 10, height:10, },
+    shadowColor: "black",
+    shadowOpacity: 1.0,
+  },
+  errorBox: {    
+    position: "absolute",
+    bottom: "2%",
+    padding: 10,
+    borderRadius: 30,
+    backgroundColor: "red",
+    borderColor: "black",
+    borderWidth: 3,
+  },
+  errorText: {    
+    color: "black",
+    fontStyle: "italic",
+    fontSize: 16
   },
   titleText: {
     color: "cyan",
@@ -118,13 +167,12 @@ var localStyles = StyleSheet.create({
     fontSize: 80,
     marginBottom: 80,
     marginTop: 80,
-    alignItems: 'center'
+    alignItems: 'center',
+    
   },
   buttonText: {
-    // backgroundColor:'#68a0ff',
     textAlign:'center',
     fontSize : 22,
-    // fontWeight: 'bold',
     fontStyle: "italic",
     paddingTop: 5,
     borderColor: "black",
@@ -135,7 +183,6 @@ var localStyles = StyleSheet.create({
     paddingTop:10,
     paddingBottom:5,
     marginTop: 30,
-    // marginBottom: 10,
     backgroundColor:'#01B0FF',
     borderRadius: 40,
     borderWidth: 3,

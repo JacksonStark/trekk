@@ -8,23 +8,15 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingView
  } from 'react-native';
 
 
-export default function Dashboard({transition, userTrekks, switchTrekk, addTrekk}) {
-
+export default function Dashboard({userTrekks, switchTrekk, addTrekk, deleteTrekk, logout}) {
   const [name, setName] = useState("");
-  
-  // trekTitles =  [
-  //   {id: 0, title: 'The Beach' },
-  //   {id: 1, title: 'The Ocean' },
-  //   {id: 3, title: 'The Jungle' },
-  //   {id: 4, title: 'The Rainforest' },
-  //   {id: 5, title: 'The Desert' },
-  //   {id: 6, title: 'The Arctic' }
+  const [loading, setLoading] = useState(false);
 
-  // ]
 
   trekks = userTrekks.map((trekk) => {
     return (
@@ -35,24 +27,30 @@ export default function Dashboard({transition, userTrekks, switchTrekk, addTrekk
         <Text style={localStyles.text}>
           {trekk.access_code}
         </Text>
-        <TouchableOpacity
-          // color="red"
-          onPress={() => switchTrekk(trekk, "CREATE_EDIT")}
-          // onPress={() => console.log(trekk.id)}
 
+        <TouchableOpacity
+          onPress={() => switchTrekk(trekk, "CREATE_EDIT")}
         >
         <Text style={localStyles.text}>Edit</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => deleteTrekk(trekk.id)}
+        >
+        <Text style={localStyles.text}>Delete</Text>
         </TouchableOpacity>
       </>
     )
   })
 
   return (
+    
     <View style={localStyles.outer}>
 
-      <ImageBackground source={require('../res/northern-lights.jpg')}
-        style = {localStyles.background} />
+      {/* <ImageBackground source={require('../res/northern-lights.jpg')}
+        style = {localStyles.background} /> */}
 
+      {/* <KeyboardAvoidingView behavior="padding" enabled> */}
 
       <ScrollView contentContainerStyle={localStyles.inner}>
         <Text style={localStyles.titleText}>
@@ -62,13 +60,15 @@ export default function Dashboard({transition, userTrekks, switchTrekk, addTrekk
         {trekks}
 
 
-        <TextInput 
-          placeholder = "Enter your Trekk name."
-          onChangeText= {(name) => {setName(name)}}
-          value = {name}
-          placeholderTextColor = "white"
-          style = {localStyles.text}
-        />
+          <TextInput 
+            placeholder = "Enter your Trekk name."
+            onChangeText= {(name) => {setName(name)}}
+            value = {name}
+            placeholderTextColor = "white"
+            style = {localStyles.text}
+            // autoFocus={true}
+          />
+
 
         <TouchableOpacity 
           onPress={() => addTrekk(name)}
@@ -76,8 +76,18 @@ export default function Dashboard({transition, userTrekks, switchTrekk, addTrekk
         >
         <Text style = {localStyles.buttonText}>Create</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={() => logout()}
+          style = {localStyles.buttons}
+        >
+        <Text style = {localStyles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+
     </ScrollView>
+    {/* </KeyboardAvoidingView> */}
   </View>
+
 
   );
 }

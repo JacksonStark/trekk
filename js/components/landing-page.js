@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Text, 
   TouchableHighlight,
   ImageBackground,
-  StyleSheet 
+  StyleSheet,
+  TextInput 
 } from 'react-native';
 
-export default function LandingPage({transition}) {
+export default function LandingPage({transition, guestArScene}) {
+
+const [accessCode, setAccessCode] = useState('')
 
   return (
     <ImageBackground source={require('../res/northern-lights.jpg')} style={localStyles.outer} >
@@ -21,6 +24,19 @@ export default function LandingPage({transition}) {
         >
 
         <Text style={localStyles.buttonText}>AR</Text>
+        </TouchableHighlight>
+
+        <TextInput
+            placeholder = "Access Code"
+            onChangeText= {(n) => {setAccessCode(n)}}
+            style={localStyles.text}
+          />
+
+        <TouchableHighlight style={localStyles.buttons}
+          onPress={() => guestArScene(accessCode)}
+        >
+
+        <Text style={localStyles.buttonText}>Enter</Text>
         </TouchableHighlight>
 
       </ImageBackground>
