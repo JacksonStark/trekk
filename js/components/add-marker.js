@@ -8,12 +8,14 @@ import {
   Button,
   ImageBackground,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
+  ScrollView
  } from 'react-native';
 
 export default function AddMarker({transition, addMarker, currentTrekk}) {
 
-  const [text, setText] = useState('')
+  const [description, setDescription] = useState('')
   const [image, setImage] = useState('')
   const [video, setVideo] = useState('')
   const [markerImage, setMarkerImage] = useState('')
@@ -21,62 +23,56 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
   console.log("In add-markr", currentTrekk)
 
   return (
-    <ImageBackground style={localStyles.outer}>
-      <View style={localStyles.inner}>
+    <View style={localStyles.outer}>
 
-          <Text>
-            Create New Marker
-          </Text>
+      <ImageBackground source={require('../res/northern-lights.jpg')}
+        style = {localStyles.background} />
 
-          <Text>
-            Marker Image:
+      <ScrollView contentContainerStyle={localStyles.inner}>
+
+          <Text style={localStyles.titleText}>
+            Add New Marker
           </Text>
 
           <TextInput
-            placeholder = "Marker Image"
+            placeholder = "Enter Marker Image URL:"
+            placeholderTextColor = "white"
             onChangeText= {(n) => {setMarkerImage(n)}}
             style={localStyles.text}
           />
 
-          <Text>
-            Text To Display:
-          </Text>
           
           <TextInput
-            placeholder = "Name of Trekk"
-            onChangeText= {(n) => {setText(n)}}
+            placeholder = "Enter Spawned Description:"
+            placeholderTextColor = "white"
+            onChangeText= {(n) => {setDescription(n)}}
             style={localStyles.text}
           />
 
-          <Text>
-            Image To Display:
-          </Text>
 
           <TextInput
-            placeholder = "Image to be Displayed"
+            placeholder = "Enter Spawned Image URL:"
+            placeholderTextColor = "white"
             onChangeText= {(n) => {setImage(n)}}
             style={localStyles.text}
           />
 
-          <Text>
-            Video To Display:
-          </Text>
-
           <TextInput
-            placeholder = "Video to be Displayed"
+            placeholder = "Enter Spawned Video URL:"
+            placeholderTextColor = "white"
             onChangeText= {(n) => {setVideo(n)}}
             style={localStyles.text}
           />
 
           <TouchableOpacity 
-          onPress={() => addMarker(markerImage, text, image, video, currentTrekk)}
-          style = {localStyles.buttons}
+          onPress={() => addMarker(markerImage, description, image, video, currentTrekk)}
+          style={localStyles.buttons}
           >
             <Text style = {localStyles.buttonText}>Add Marker</Text>
           </TouchableOpacity>
 
-    </View>
-  </ImageBackground>
+    </ScrollView>
+  </View>
   );
 }
 
@@ -88,12 +84,34 @@ var localStyles = StyleSheet.create({
     backgroundColor: "white",
   },
   inner: {
-    flex : 1,
+    flexGrow : 1,
     flexDirection: 'column',
     alignItems:'center',
+    backgroundColor: "transparent",
+  },
+  background: {
+    width: Dimensions.get("window").width, //for full screen
+    height: Dimensions.get("window").height, //for full screen
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   },
   text: {
-    color:"black"
+    marginTop: 48,
+    color: "white",
+    fontSize: 20,
+    fontStyle: "italic",
+  },
+  titleText: {
+    color: "cyan",
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: 80,
+    marginBottom: 30,
+    marginTop: 80,
+    alignItems: 'center'
   },
   buttonText: {
     // backgroundColor:'#68a0ff',
@@ -109,7 +127,7 @@ var localStyles = StyleSheet.create({
     width: 120,
     paddingTop:10,
     paddingBottom:5,
-    marginTop: 30,
+    marginTop: 50,
     // marginBottom: 10,
     backgroundColor:'#01B0FF',
     borderRadius: 40,

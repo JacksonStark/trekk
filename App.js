@@ -90,10 +90,8 @@ export default function ViroSample() {
   }
 
   const addMarker = (marker_image, spawned_description, spawned_image, spawned_video, trekk_id) => {
-    console.log("add marker consoles:", marker_image, spawned_description, spawned_image, spawned_video, trekk_id)
     axios.post(`http://trekk.herokuapp.com/markers/create?marker_image=${marker_image}&spawned_description=${spawned_description}&spawned_image=${spawned_image}&spawned_video=${spawned_video}&trekk_id=${trekk_id}`)
     .then((res) => {
-      console.log(res.data)
       dispatch({type: SET_MARKERS, value: res.data.markers})
       res.data.bool ? transition('CREATE_EDIT', true) : null
     })
@@ -102,7 +100,6 @@ export default function ViroSample() {
   const addTrekk = (name) => {
     axios.post(`http://trekk.herokuapp.com/trekks/create?user_id=${state.currentUser}&name=${name}`)
       .then((res) => {
-        console.log(res)
         data = {
           id: res.data.trekk_id,
           name: res.data.name
@@ -116,20 +113,48 @@ export default function ViroSample() {
   const refreshDashboard = () => {
     dispatch({type: SET_TREKK, value: ""})
     dispatch({type: SET_MARKERS, value: ""})
-    transition("DASHBOARD")
+    axios.get(`http://trekk.herokuapp.com/trekks/${state.currentUser}`)
+    .then((res) => {
+      dispatch({type:SET_USER_TREKKS, value: res.data.trekks})
+      transition('DASHBOARD')
+    })
   }
 
 
+  const deleteTrekk = (id) => {
+    axios.delete(`http://trekk.herokuapp.com/trekks?trekk_id=${id}&user_id=${state.currentUser}`)
+    .then((res) => {
+      dispatch({type: 'SET_USER_TREKKS', value: res.data.trekks})
+      transition('DASHBOARD')
+    })
+  }
+
+  const logout = () => {
+    dispatch({type: 'SET_USER', value: ''})
+    dispatch({type: 'SET_USER_TREKKS', value: []})
+    dispatch({type: 'SET_TREKK', value: ''})
+    dispatch({type: 'SET_MARKERS', value: ''})
+    transition('LANDING_PAGE')
+  }
+
+  const guestArScene = (accessCode) => {
+    axios.get(`http://trekk.herokuapp.com/trekks/guest/${accessCode}`)
+    .then((res) => {
+      dispatch({type: 'SET_MARKERS', value: res.data.markers})
+      transition('AR_SCENE')
+    })
+  }
+
   return (
     <>
-      {mode === LANDING_PAGE && (<LandingPage transition = {transition} localStyles = {localStyles} />)}
+      {mode === LANDING_PAGE && (<LandingPage transition = {transition} localStyles = {localStyles} guestArScene = {guestArScene} />)}
       {mode === LOGIN && (<Login transition = {transition} switchUser= {switchUser} />)}
-      {mode === REGISTER && (<Register transition = {transition} localStyles = {localStyles} />)}
-      {mode === DASHBOARD && (<Dashboard addTrekk = {addTrekk} switchTrekk = {switchTrekk} transition = {transition} localStyles = {localStyles} userTrekks = {state.userTrekks} />)}
+      {mode === REGISTER && (<Register transition = {transition} switchUser = {switchUser} localStyles = {localStyles} />)}
+      {mode === DASHBOARD && (<Dashboard logout = {logout} addTrekk = {addTrekk} switchTrekk = {switchTrekk} deleteTrekk = {deleteTrekk} localStyles = {localStyles} userTrekks = {state.userTrekks} />)}
       {mode === CREATE_EDIT && (<CreateEdit goToAddMarker= {goToAddMarker} currentMarkers = {state.currentMarkers} refreshDashboard = {refreshDashboard} localStyles = {localStyles} currentUser = {state.currentUser} currentTrekk = {state.currentTrekk} />)}
       {/* {mode === EDIT && (<Edit transition = {transition} localStyles = {localStyles} />)} */}
       {mode === ADD_MARKER && (<AddMarker addMarker = {addMarker} transition = {transition} currentTrekk = {state.currentTrekk.id} localStyles = {localStyles} />)}
-      {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} userMarkers = {state.currentMarkers} />)}
+      {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} userMarkers = {state.currentMarkers} currentUser = {state.currentUser} />)}
     </>
   )
 
