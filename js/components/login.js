@@ -9,7 +9,8 @@ import {
   ImageBackground,
   ScrollView,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  Image
  } from 'react-native';
  import axios from 'axios';
 
@@ -52,23 +53,28 @@ export default function Login({transition, switchUser}) {
 
       <ScrollView contentContainerStyle={localStyles.inner}>
 
-        <Text style={localStyles.titleText}>
-          Login
-        </Text>
-
         { error ? (
           <TouchableOpacity style={localStyles.errorBox}>
             <Text style={localStyles.errorText}>{error}</Text>
           </TouchableOpacity>)
           : null }
+      <View style={localStyles.totalContainer}>
+
+      <Image
+        style={{width: 250, height: 45}}
+        source={require('../res/loginLogo.png')}
+      />
+
+          <View style={localStyles.formContainer}>
+
 
 
         <TextInput
           placeholder = "Enter your e-mail."
           onChangeText= {(email) => {setEmail(email)}}
           value = {email}
-          placeholderTextColor = "white"
-          style = {localStyles.text}
+          placeholderTextColor = "#d1d1d1"
+          style = {localStyles.textForm}
           onFocus={() => setError("")}
         />
 
@@ -76,8 +82,8 @@ export default function Login({transition, switchUser}) {
           placeholder = "Enter your password."
           onChangeText= {(password) => {setPassword(password)}}
           value = {password}
-          placeholderTextColor = "white"
-          style = {localStyles.text}
+          placeholderTextColor = "#d1d1d1"
+          style = {localStyles.textForm}
           secureTextEntry={true}
           onFocus={() => setError("")}
         />
@@ -89,19 +95,27 @@ export default function Login({transition, switchUser}) {
         : 
           <TouchableOpacity 
             onPress = {() => validate()}
-            style = {localStyles.buttons}
+            style = {localStyles.button2}
           >
-          <Text style = {localStyles.buttonText}>Enter</Text>
+          <Text style = {localStyles.buttonText}>ENTER</Text>
           </TouchableOpacity>
          }
+        </View>
+
+        <View style={localStyles.buttonHolder}>
+
 
 
         <TouchableOpacity 
-          onPress = {() => transition("REGISTER")}
-          style = {localStyles.buttons}
+          onPress = {() => transition("LANDING_PAGE")}
+          style = {localStyles.button2}
         >
-        <Text style = {localStyles.buttonText}>Register</Text>
+        <Text style = {localStyles.buttonText}>BACK</Text>
         </TouchableOpacity>
+
+        </View>
+
+        </View>
 
     </ScrollView>
   </View>
@@ -121,9 +135,33 @@ var localStyles = StyleSheet.create({
     alignItems:'center',
     backgroundColor: "transparent",
   },
+  totalContainer: {
+    marginBottom: "10%",
+    marginTop: "30%",
+    alignItems:'center',
+  },
+
+  formContainer: {
+    alignItems:'center',
+    marginTop: "20%",
+    marginBottom: "15%"
+  },
+
+  textForm: {
+    marginTop: 20,
+    color: "#858585",
+    fontSize: 25,
+    width: 300,
+    textAlign: 'center',
+    borderBottomColor: 'white',
+    borderBottomWidth: 2,
+    marginBottom: 10,
+    letterSpacing: 3
+  },
+
   background: {
     width: Dimensions.get("window").width, //for full screen
-    height: Dimensions.get("window").height, //for full screen
+    // height: Dimensions.get("window").height, //for full screen
     position: "absolute",
     top: 0,
     left: 0,
@@ -150,10 +188,10 @@ var localStyles = StyleSheet.create({
     position: "absolute",
     bottom: "2%",
     padding: 10,
-    borderRadius: 30,
     backgroundColor: "red",
     borderColor: "black",
-    borderWidth: 3,
+    borderWidth: 1,
+    opacity: 0.8
   },
   errorText: {    
     color: "black",
@@ -171,12 +209,20 @@ var localStyles = StyleSheet.create({
     
   },
   buttonText: {
+    fontWeight: "100",
+    backgroundColor:'transparent',
+    color: 'white',
     textAlign:'center',
-    fontSize : 22,
-    fontStyle: "italic",
-    paddingTop: 5,
-    borderColor: "black",
+    fontSize : 33,
+    borderColor: "white",
+    letterSpacing: 5,
+    fontWeight: "400"
   },
+
+  buttonHolder: {
+    top: "10%"
+  },
+
   buttons : {
     height: 60,
     width: 120,
@@ -187,5 +233,20 @@ var localStyles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 3,
     borderColor: 'black',
+  },
+  button2 : {
+    height: 50,
+    minWidth: 10,
+    maxWidth: 200,
+    paddingTop:0,
+    paddingBottom:3,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginTop: 30,
+    marginBottom: 10,
+    backgroundColor:'transparent',
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: 'white',
   },
 })
