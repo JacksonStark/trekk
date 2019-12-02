@@ -4,7 +4,10 @@ import {
   TouchableHighlight,
   ImageBackground,
   StyleSheet,
-  TextInput 
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image
 } from 'react-native';
 
 export default function LandingPage({transition, guestArScene}) {
@@ -15,29 +18,47 @@ const [accessCode, setAccessCode] = useState('')
     <ImageBackground source={require('../res/northern-lights.jpg')} style={localStyles.outer} >
       <ImageBackground style={localStyles.inner} >
 
-        <Text style={localStyles.titleText}>
-          Tap here to start your Trekk
-        </Text>
+        <Image
+          style={{width: 200, height: 35}}
+          source={require('../res/trekkLogo.png')}
+        />
 
-        <TouchableHighlight style={localStyles.buttons}
+        <View style={localStyles.loginRegister}>
+
+        <TouchableOpacity style={localStyles.buttons}
           onPress={() => transition("LOGIN")}
         >
+        <Text style={localStyles.buttonText}>LOG IN</Text>
+        </TouchableOpacity>
 
-        <Text style={localStyles.buttonText}>AR</Text>
-        </TouchableHighlight>
+        <TouchableOpacity 
+          onPress = {() => transition("REGISTER")}
+          style = {localStyles.buttons}
+        >
+        <Text style = {localStyles.buttonText}>REGISTER</Text>
+        </TouchableOpacity>
+
+        </View>
+
+        <View style={localStyles.accessButtonHolder}>
+
+        <Text style={localStyles.text}>
+          ACCESS CODE
+        </Text>
 
         <TextInput
-            placeholder = "Access Code"
+            placeholder = ""
             onChangeText= {(n) => {setAccessCode(n)}}
-            style={localStyles.text}
+            style={localStyles.textForm}
           />
 
-        <TouchableHighlight style={localStyles.buttons}
+        <TouchableHighlight style={localStyles.button2}
           onPress={() => guestArScene(accessCode)}
         >
-
-        <Text style={localStyles.buttonText}>Enter</Text>
+        <Text style={localStyles.buttonText}>ENTER</Text>
         </TouchableHighlight>
+
+        </View>
 
       </ImageBackground>
     </ImageBackground>
@@ -58,8 +79,30 @@ var localStyles = StyleSheet.create({
   text: {
     marginTop: 20,
     color: "white",
-    fontSize: 30,
-    fontStyle: "italic",
+    fontSize: 25,
+    letterSpacing: 5
+  },
+  textForm: {
+    marginTop: 20,
+    color: "white",
+    fontSize: 25,
+    width: 300,
+    textAlign: 'center',
+    borderBottomColor: 'white',
+    borderBottomWidth: 2,
+    marginBottom: 10,
+  },
+  loginRegister: {
+    paddingTop: "20%",
+    paddingBottom: 30,
+    margin: 10,
+    top: "3%",
+    backgroundColor: "transparent"
+  },
+  accessButtonHolder: {
+    top: "8%",
+    marginTop: "5%",
+    alignItems:'center'
   },
   titleText: {
     color: "cyan",
@@ -70,22 +113,33 @@ var localStyles = StyleSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    backgroundColor:'#68a0ff',
+    fontWeight: "100",
+    backgroundColor:'transparent',
+    color: 'white',
     textAlign:'center',
     fontSize : 33,
-    // paddingTop: 10,
-    borderColor: "black",
+    borderColor: "white",
+    letterSpacing: 5,
   },
   buttons : {
-    height: 80,
-    width: 150,
-    paddingTop:20,
-    paddingBottom:20,
+    height: 40,
+    width: 300,
+    paddingTop:5,
+    paddingBottom:5,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor:'#68a0cf',
-    borderRadius: 20,
+    backgroundColor:'transparent',
+  },
+  button2 : {
+    height: 60,
+    width: 150,
+    paddingTop:5,
+    paddingBottom:5,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor:'transparent',
+    borderRadius: 10,
     borderWidth: 3,
-    borderColor: 'black',
+    borderColor: 'white',
   },
 })
