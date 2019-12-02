@@ -143,20 +143,23 @@ var localStyles = StyleSheet.create({
 
   formContainer: {
     alignItems:'center',
-    marginTop: "20%",
+    marginTop: "30%",
     marginBottom: "15%"
   },
 
   textForm: {
+    paddingBottom: 15,
+    marginBottom: 20,
     marginTop: 20,
-    color: "#858585",
+    color: "white",
     fontSize: 25,
     width: 300,
     textAlign: 'center',
     borderBottomColor: 'white',
     borderBottomWidth: 2,
     marginBottom: 10,
-    letterSpacing: 3
+    letterSpacing: 1,
+    fontStyle: 'italic'
   },
 
   background: {
@@ -220,7 +223,7 @@ var localStyles = StyleSheet.create({
   },
 
   buttonHolder: {
-    top: "10%"
+    top: "7%"
   },
 
   buttons : {
@@ -235,10 +238,9 @@ var localStyles = StyleSheet.create({
     borderColor: 'black',
   },
   button2 : {
-    height: 50,
     minWidth: 10,
     maxWidth: 200,
-    paddingTop:0,
+    paddingTop:3,
     paddingBottom:3,
     paddingLeft: 10,
     paddingRight: 10,
