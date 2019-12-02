@@ -40,6 +40,7 @@ export default function ViroSample() {
     currentMarkers: ""
   })
 
+  console.log("UPDATED HISTORY: ", history);
 
   const transition = (nextMode, back = false) => {
     if (back) {
@@ -108,7 +109,7 @@ export default function ViroSample() {
         transition('CREATE_EDIT')
     })
   }
-  console.log('CURRENT TREKK ID: ', state.currentTrekk)
+  // console.log('CURRENT TREKK ID: ', state.currentTrekk)
 
   const refreshDashboard = () => {
     dispatch({type: SET_TREKK, value: ""})
@@ -124,8 +125,23 @@ export default function ViroSample() {
   const deleteTrekk = (id) => {
     axios.delete(`http://trekk.herokuapp.com/trekks?trekk_id=${id}&user_id=${state.currentUser}`)
     .then((res) => {
+      dispatch({type: 'SET_USER_TREKKS', value: []})
       dispatch({type: 'SET_USER_TREKKS', value: res.data.trekks})
       transition('DASHBOARD')
+    })
+  }
+
+  const deleteMarker = (id) => {
+    console.log('MARKER ID (in App.js): ', id)
+    console.log('STATE TREKK ID (in App.js): ', state.currentTrekk.id)
+
+
+    axios.delete(`http://trekk.herokuapp.com/markers?marker_id=${id}&trekk_id=${state.currentTrekk.id}`)
+    .then((res) => {
+      console.log(res.data)
+      dispatch({type: 'SET_MARKERS', value: ""})
+      dispatch({type: 'SET_MARKERS', value: res.data.markers})
+      transition('CREATE_EDIT')
     })
   }
 
@@ -151,7 +167,7 @@ export default function ViroSample() {
       {mode === LOGIN && (<Login transition = {transition} switchUser= {switchUser} />)}
       {mode === REGISTER && (<Register transition = {transition} switchUser = {switchUser} localStyles = {localStyles} />)}
       {mode === DASHBOARD && (<Dashboard logout = {logout} addTrekk = {addTrekk} switchTrekk = {switchTrekk} deleteTrekk = {deleteTrekk} localStyles = {localStyles} userTrekks = {state.userTrekks} />)}
-      {mode === CREATE_EDIT && (<CreateEdit goToAddMarker= {goToAddMarker} currentMarkers = {state.currentMarkers} refreshDashboard = {refreshDashboard} localStyles = {localStyles} currentUser = {state.currentUser} currentTrekk = {state.currentTrekk} />)}
+      {mode === CREATE_EDIT && (<CreateEdit deleteMarker= {deleteMarker} goToAddMarker= {goToAddMarker} currentMarkers = {state.currentMarkers} refreshDashboard = {refreshDashboard} localStyles = {localStyles} currentUser = {state.currentUser} currentTrekk = {state.currentTrekk} />)}
       {/* {mode === EDIT && (<Edit transition = {transition} localStyles = {localStyles} />)} */}
       {mode === ADD_MARKER && (<AddMarker addMarker = {addMarker} transition = {transition} currentTrekk = {state.currentTrekk.id} localStyles = {localStyles} />)}
       {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} userMarkers = {state.currentMarkers} currentUser = {state.currentUser} />)}

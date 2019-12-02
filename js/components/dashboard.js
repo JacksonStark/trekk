@@ -9,37 +9,41 @@ import {
   TextInput,
   ScrollView,
   Dimensions,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Clipboard,
+  Alert
  } from 'react-native';
+//  import SwipeableViews from 'react-swipeable-views-native';
+import SwipeableViews from 'react-swipeable-views-native/lib/SwipeableViews.scroll';
 
 
 export default function Dashboard({userTrekks, switchTrekk, addTrekk, deleteTrekk, logout}) {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const printToClipboard = function (access_code) {
+    Clipboard.setString(access_code)
+    Alert.alert("Access Code copied to clipboard")
+  }
+
 
   trekks = userTrekks.map((trekk) => {
     return (
-      <>
-        <Text style={localStyles.text} onPress={() => switchTrekk(trekk, "AR_SCENE")}>
-          {trekk.name}
-        </Text>
-        <Text style={localStyles.text}>
-          {trekk.access_code}
-        </Text>
+      <SwipeableViews>
+        <View style={{flex: 1, alignItems: "center"}}>
+          <Text style={localStyles.text} onPress={() => switchTrekk(trekk, "AR_SCENE")}>
+            {trekk.name}
+          </Text>
+        </View>
 
-        <TouchableOpacity
-          onPress={() => switchTrekk(trekk, "CREATE_EDIT")}
-        >
-        <Text style={localStyles.text}>Edit</Text>
-        </TouchableOpacity>
+        <View style={localStyles.swipe_items}>
+          {/* <Text style={[localStyles.text, {backgroundColor: "rgb(46,134,193)"}]}>{trekk.access_code}</Text> */}
+          <Text style={[localStyles.text, {backgroundColor: "rgb(46,134,193)"}]} onPress={() => printToClipboard(trekk.access_code)}>Access Code</Text>
+          <Text style={[localStyles.text, {backgroundColor: "rgb(212,172,13)"}]} onPress={() => switchTrekk(trekk, "CREATE_EDIT")}>Edit</Text>
+          <Text style={[localStyles.text, {backgroundColor: "rgb(231,76,60)"}]} onPress={() => deleteTrekk(trekk.id)}>Delete</Text>
+        </View>
 
-        <TouchableOpacity
-          onPress={() => deleteTrekk(trekk.id)}
-        >
-        <Text style={localStyles.text}>Delete</Text>
-        </TouchableOpacity>
-      </>
+      </SwipeableViews>
     )
   })
 
@@ -47,10 +51,10 @@ export default function Dashboard({userTrekks, switchTrekk, addTrekk, deleteTrek
     
     <View style={localStyles.outer}>
 
-      {/* <ImageBackground source={require('../res/northern-lights.jpg')}
-        style = {localStyles.background} /> */}
+      <ImageBackground source={require('../res/northern-lights.jpg')}
+        style = {localStyles.background} />
 
-      {/* <KeyboardAvoidingView behavior="padding" enabled> */}
+      <KeyboardAvoidingView behavior="padding" enabled>
 
       <ScrollView contentContainerStyle={localStyles.inner}>
         <Text style={localStyles.titleText}>
@@ -66,7 +70,6 @@ export default function Dashboard({userTrekks, switchTrekk, addTrekk, deleteTrek
             value = {name}
             placeholderTextColor = "white"
             style = {localStyles.text}
-            // autoFocus={true}
           />
 
 
@@ -85,7 +88,7 @@ export default function Dashboard({userTrekks, switchTrekk, addTrekk, deleteTrek
         </TouchableOpacity>
 
     </ScrollView>
-    {/* </KeyboardAvoidingView> */}
+    </KeyboardAvoidingView>
   </View>
 
 
@@ -105,6 +108,17 @@ var localStyles = StyleSheet.create({
     alignItems:'center',
     backgroundColor: "transparent",
   },
+  // swipe: {
+  //   flex : 1,
+  //   flexDirection: 'column',
+  //   alignItems:'center',
+  //   backgroundColor: "transparent",
+  // },
+  swipe_items: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: "transparent",
+  },
   background: {
     width: Dimensions.get("window").width, //for full screen
     height: Dimensions.get("window").height, //for full screen
@@ -116,9 +130,14 @@ var localStyles = StyleSheet.create({
   },
   text: {
     marginTop: 20,
-    color: "white",
+    color: "black",
     fontSize: 30,
     fontStyle: "italic",
+    backgroundColor: "red",
+    borderRadius: 20,
+    borderWidth: 4,
+    padding: 5,
+    overflow: "hidden"
   },
   titleText: {
     color: "cyan",
@@ -130,10 +149,8 @@ var localStyles = StyleSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    // backgroundColor:'#68a0ff',
     textAlign:'center',
     fontSize : 22,
-    // fontWeight: 'bold',
     fontStyle: "italic",
     paddingTop: 5,
     borderColor: "black",
@@ -144,7 +161,6 @@ var localStyles = StyleSheet.create({
     paddingTop:10,
     paddingBottom:5,
     marginTop: 30,
-    // marginBottom: 10,
     backgroundColor:'#01B0FF',
     borderRadius: 40,
     borderWidth: 3,
