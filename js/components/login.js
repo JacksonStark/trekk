@@ -88,10 +88,6 @@ export default function Login({transition, switchUser}) {
           onFocus={() => setError("")}
         />
 
-        </View>
-
-        <View style={localStyles.buttonHolder}>
-
         {loading ? 
           <View style={{marginTop: 30, height: 60, width: 120 }}>
             <ActivityIndicator size="large" color="white" /> 
@@ -104,13 +100,17 @@ export default function Login({transition, switchUser}) {
           <Text style = {localStyles.buttonText}>ENTER</Text>
           </TouchableOpacity>
          }
+        </View>
+
+        <View style={localStyles.buttonHolder}>
+
 
 
         <TouchableOpacity 
-          onPress = {() => transition("REGISTER")}
+          onPress = {() => transition("LANDING_PAGE")}
           style = {localStyles.button2}
         >
-        <Text style = {localStyles.buttonText}>REGISTER</Text>
+        <Text style = {localStyles.buttonText}>BACK</Text>
         </TouchableOpacity>
 
         </View>
@@ -137,12 +137,13 @@ var localStyles = StyleSheet.create({
   },
   totalContainer: {
     marginBottom: "10%",
-    marginTop: "35%",
+    marginTop: "30%",
     alignItems:'center',
   },
 
   formContainer: {
-    marginTop: "15%",
+    alignItems:'center',
+    marginTop: "20%",
     marginBottom: "15%"
   },
 
@@ -190,6 +191,7 @@ var localStyles = StyleSheet.create({
     backgroundColor: "red",
     borderColor: "black",
     borderWidth: 1,
+    opacity: 0.8
   },
   errorText: {    
     color: "black",
@@ -218,7 +220,7 @@ var localStyles = StyleSheet.create({
   },
 
   buttonHolder: {
-    top: "15%"
+    top: "10%"
   },
 
   buttons : {
@@ -234,12 +236,13 @@ var localStyles = StyleSheet.create({
   },
   button2 : {
     height: 50,
-    minWidth: 150,
+    minWidth: 10,
+    maxWidth: 200,
     paddingTop:0,
     paddingBottom:3,
     paddingLeft: 10,
     paddingRight: 10,
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 10,
     backgroundColor:'transparent',
     borderRadius: 10,
