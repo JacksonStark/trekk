@@ -100,7 +100,7 @@ export default function Register({transition, switchUser}) {
          </View>
 
         <TouchableOpacity 
-          onPress = {() => transition("LOGIN")}
+          onPress = {() => transition("LANDING_PAGE")}
           style = {localStyles.button2}
         >
         <Text style = {localStyles.buttonText}>BACK</Text>
