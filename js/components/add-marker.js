@@ -21,7 +21,12 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
   const [video, setVideo] = useState('')
   const [markerImage, setMarkerImage] = useState('')
 
-  console.log("In add-markr", currentTrekk)
+  const [error, setError] = useState(""); 
+
+  const validate = () => {
+    markerImage ? null : setError("Please enter a marker image.")
+    markerImage ? addMarker(markerImage, description, image, video, currentTrekk) : null
+  }
 
   return (
     <View style={localStyles.outer}>
@@ -43,6 +48,12 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
             onChangeText= {(n) => {setMarkerImage(n)}}
             style={localStyles.text}
           />
+
+          { error ? (
+          <TouchableOpacity style={localStyles.errorBox}>
+            <Text style={localStyles.errorText}>{error}</Text>
+          </TouchableOpacity>)
+          : null }
 
           
           <TextInput
@@ -68,7 +79,7 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
           />
 
           <TouchableOpacity 
-          onPress={() => addMarker(markerImage, description, image, video, currentTrekk)}
+          onPress={() => validate()}
           style={localStyles.buttons}
           >
             <Text style = {localStyles.buttonText}>Add Marker</Text>
@@ -137,5 +148,19 @@ var localStyles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 3,
     borderColor: 'black',
+  },
+  errorBox: {    
+    position: "absolute",
+    bottom: "2%",
+    padding: 10,
+    backgroundColor: "red",
+    borderColor: "black",
+    borderWidth: 1,
+    opacity: 0.8
+  },
+  errorText: {    
+    color: "black",
+    fontStyle: "italic",
+    fontSize: 16
   },
 })
