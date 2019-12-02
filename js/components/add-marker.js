@@ -10,7 +10,8 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  ScrollView
+  ScrollView,
+  KeyboardAvoidingView,
  } from 'react-native';
 
 export default function AddMarker({transition, addMarker, currentTrekk}) {
@@ -27,6 +28,8 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
 
       <ImageBackground source={require('../res/northern-lights.jpg')}
         style = {localStyles.background} />
+
+      {/* <KeyboardAvoidingView behavior="position"> */}
 
       <ScrollView contentContainerStyle={localStyles.inner}>
 
@@ -72,6 +75,7 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
           </TouchableOpacity>
 
     </ScrollView>
+    {/* </KeyboardAvoidingView> */}
   </View>
   );
 }
