@@ -7,61 +7,93 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image
+  Image,
+  ScrollView,
+  Dimensions,
+  KeyboardAvoidingView
 } from 'react-native';
+
+import axios from "axios";
 
 export default function LandingPage({transition, guestArScene}) {
 
 const [accessCode, setAccessCode] = useState('')
+const [error, setError] = useState('')
+
+const validate = () => {
+
+  accessCode === "" ? setError("Please enter an access code.")
+  : 
+  axios.get(`http://trekk.herokuapp.com/trekks/guest/${accessCode}`)
+  .then((res) => {
+    res.data.markers ? guestArScene(res.data.markers) : setError('Invalid Access Code')
+  })
+}
 
   return (
-    <ImageBackground source={require('../res/northern-lights.jpg')} style={localStyles.outer} >
-      <ImageBackground style={localStyles.inner} >
+    <View style={localStyles.outer}>
 
-        <Image
-          style={{width: 200, height: 35}}
-          source={require('../res/trekkLogo.png')}
-        />
+      <ImageBackground source={require('../res/northern-lights.jpg')}
+        style = {localStyles.background} />
 
-        <View style={localStyles.loginRegister}>
+      <KeyboardAvoidingView style={{flexDirection: 'row',
+        alignItems:'center'}}  behavior="padding" enabled>
 
-        <TouchableOpacity style={localStyles.buttons}
-          onPress={() => transition("LOGIN")}
-        >
-        <Text style={localStyles.buttonText}>LOG IN</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity 
-          onPress = {() => transition("REGISTER")}
-          style = {localStyles.buttons}
-        >
-        <Text style = {localStyles.buttonText}>REGISTER</Text>
-        </TouchableOpacity>
-
-        </View>
-
-        <View style={localStyles.accessButtonHolder}>
-
-        <Text style={localStyles.text}>
-          ACCESS CODE
-        </Text>
-
-        <TextInput
-            placeholder = ""
-            onChangeText= {(n) => {setAccessCode(n)}}
-            style={localStyles.textForm}
+        <ScrollView contentContainerStyle={localStyles.inner} >
+          <Image
+            style={{width: 200, height: 35, marginTop: 150, marginBottom: 80}}
+            source={require('../res/trekkLogo.png')}
           />
 
-        <TouchableHighlight style={localStyles.button2}
-          onPress={() => guestArScene(accessCode)}
-        >
-        <Text style={localStyles.buttonText}>ENTER</Text>
-        </TouchableHighlight>
+          <View style={localStyles.loginRegister}>
 
-        </View>
+          <TouchableOpacity style={localStyles.buttons}
+            onPress={() => transition("LOGIN")}
+          >
+          <Text style={localStyles.buttonText}>LOG IN</Text>
+          </TouchableOpacity>
 
-      </ImageBackground>
-    </ImageBackground>
+          <TouchableOpacity 
+            onPress = {() => transition("REGISTER")}
+            style = {localStyles.buttons}
+          >
+          <Text style = {localStyles.buttonText}>REGISTER</Text>
+          </TouchableOpacity>
+
+          </View>
+
+
+          <View style={localStyles.accessButtonHolder}>
+
+            <Text style={localStyles.text}>
+              ACCESS CODE
+            </Text>
+
+            <TextInput
+                placeholder = "Enter Access Code"
+                onChangeText= {(n) => {setAccessCode(n)}}
+                style={localStyles.textForm}
+                onFocus={() => setError("")}
+              />
+
+            <TouchableHighlight style={localStyles.button2}
+              onPress={() => validate()}
+            >
+              <Text style={localStyles.buttonText}>ENTER</Text>
+            </TouchableHighlight>
+          </View>
+
+          { error ? (
+            <TouchableOpacity style={localStyles.errorBox}>
+              <Text style={localStyles.errorText}>{error}</Text>
+            </TouchableOpacity>
+            ) : null }
+
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
+
   );
 }
 
@@ -72,9 +104,18 @@ var localStyles = StyleSheet.create({
     alignItems:'center',
   },
   inner: {
-    flex : 1,
+    flexGrow : 1,
     flexDirection: 'column',
     alignItems:'center',
+  },
+  background: {
+    width: Dimensions.get("window").width, //for full screen
+    height: Dimensions.get("window").height, //for full screen
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   },
   text: {
     marginTop: 20,
@@ -92,17 +133,38 @@ var localStyles = StyleSheet.create({
     borderBottomWidth: 2,
     marginBottom: 10,
   },
+  errorBox: {
+    position: "absolute",
+    bottom: 25,
+    padding: 10,
+    backgroundColor: "red",
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 20,
+    opacity: 0.8
+  },
+  errorText: {
+    color: "black",
+    fontStyle: "italic",
+    fontSize: 16
+  },
   loginRegister: {
-    paddingTop: "20%",
-    paddingBottom: 30,
+    // flex:1,
+    // paddingTop: "20%",
+    paddingTop: 20,
+    paddingBottom: 10,
     margin: 10,
-    top: "3%",
-    backgroundColor: "transparent"
+    // top: "3%",
+    // top: 10,
+    backgroundColor: "transparent",
   },
   accessButtonHolder: {
-    top: "8%",
-    marginTop: "5%",
-    alignItems:'center'
+    // flex: 1,
+    // top: "8%",
+    // top: 24,
+    marginTop: 80,
+    alignItems:'center',
+    // justifyContent: 'flex-end'
   },
   titleText: {
     color: "cyan",
@@ -114,6 +176,7 @@ var localStyles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: "100",
+    // fontWeight: "bold",
     backgroundColor:'transparent',
     color: 'white',
     textAlign:'center',
@@ -122,17 +185,17 @@ var localStyles = StyleSheet.create({
     letterSpacing: 5,
   },
   buttons : {
-    height: 40,
-    width: 300,
-    paddingTop:5,
-    paddingBottom:5,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor:'transparent',
+    // height: 40,
+    // width: 300,
+    // paddingTop:5,
+    // paddingBottom:5,
+    // marginTop: 50,
+    marginBottom: 15,
+    // backgroundColor:'transparent',
   },
   button2 : {
-    height: 60,
-    width: 150,
+    // height: 60,
+    // width: 150,
     paddingTop:5,
     paddingBottom:5,
     marginTop: 10,
