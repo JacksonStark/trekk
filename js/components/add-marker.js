@@ -34,7 +34,8 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
       <ImageBackground source={require('../res/northern-lights.jpg')}
         style = {localStyles.background} />
 
-      {/* <KeyboardAvoidingView behavior="position"> */}
+      <KeyboardAvoidingView style={{flexDirection: 'row',
+        alignItems:'center',}} behavior="padding" enabled>
 
       <ScrollView contentContainerStyle={localStyles.inner}>
 
@@ -77,16 +78,26 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
             onChangeText= {(n) => {setVideo(n)}}
             style={localStyles.text}
           />
+          <View style={localStyles.buttonsContainer}>
 
           <TouchableOpacity 
-          onPress={() => validate()}
+          onPress={() => transition("CREATE_EDIT", true)}
+          style={localStyles.buttons}
+          >
+            <Text style = {localStyles.buttonText}>Back</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+          onPress={() => addMarker(markerImage, description, image, video, currentTrekk)}
           style={localStyles.buttons}
           >
             <Text style = {localStyles.buttonText}>Add Marker</Text>
           </TouchableOpacity>
 
+        </View>
+
     </ScrollView>
-    {/* </KeyboardAvoidingView> */}
+    </KeyboardAvoidingView>
   </View>
   );
 }
@@ -138,17 +149,26 @@ var localStyles = StyleSheet.create({
     borderColor: "black",
   },
   buttons : {
-    height: 60,
-    width: 120,
-    paddingTop:10,
-    paddingBottom:5,
+    // height: 60,
+    // width: 120,
+    // paddingTop:10,
+    // paddingBottom:5,
+    padding: 8,
     marginTop: 50,
+    marginLeft: 15,
+    marginRight: 15,
     // marginBottom: 10,
     backgroundColor:'#01B0FF',
     borderRadius: 40,
     borderWidth: 3,
     borderColor: 'black',
   },
+
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  }
+
   errorBox: {    
     position: "absolute",
     bottom: "2%",
@@ -163,4 +183,5 @@ var localStyles = StyleSheet.create({
     fontStyle: "italic",
     fontSize: 16
   },
+
 })

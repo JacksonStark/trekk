@@ -132,10 +132,6 @@ export default function ViroSample() {
   }
 
   const deleteMarker = (id) => {
-    console.log('MARKER ID (in App.js): ', id)
-    console.log('STATE TREKK ID (in App.js): ', state.currentTrekk.id)
-
-
     axios.delete(`http://trekk.herokuapp.com/markers?marker_id=${id}&trekk_id=${state.currentTrekk.id}`)
     .then((res) => {
       console.log(res.data)
@@ -153,12 +149,9 @@ export default function ViroSample() {
     transition('LANDING_PAGE')
   }
 
-  const guestArScene = (accessCode) => {
-    axios.get(`http://trekk.herokuapp.com/trekks/guest/${accessCode}`)
-    .then((res) => {
-      dispatch({type: 'SET_MARKERS', value: res.data.markers})
-      transition('AR_SCENE')
-    })
+  const guestArScene = (markersArray) => {
+    dispatch({type: 'SET_MARKERS', value: markersArray})
+    transition('AR_SCENE')
   }
 
   return (

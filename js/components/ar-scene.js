@@ -1,21 +1,23 @@
 import React from 'react';
-import { Text, ImageBackground } from 'react-native';
+import { Image, View, TouchableOpacity } from 'react-native';
 import { ViroARSceneNavigator} from 'react-viro';
 import InitialARScene from '../ArEnvironment';
 
 
-export default function ArScene({transition, localStyles, userMarkers, currentUser}) {
+export default function ArScene({transition, userMarkers, currentUser}) {
   return (
-    <>
-    <ImageBackground style={{height: 150}} source={require('../res/Beach.jpg')}>
-      <Text style={localStyles.headerText} onPress = {() => currentUser ? transition("DASHBOARD", true) : transition("LANDING_PAGE")}>
-        Jackson, Frank, Adam
-      </Text>
-    </ImageBackground>
-    <ViroARSceneNavigator 
-      autofocus = {true}
-      viroAppProps = {userMarkers}
-      initialScene={{scene: InitialARScene}} />
-    </>
+    <View style={{flex: 1}} >
+
+      <ViroARSceneNavigator 
+        viroAppProps = {userMarkers}
+        initialScene={{scene: InitialARScene}} />
+        
+      <View style={{position: 'absolute', top: 25, left: 25}}>
+        <TouchableOpacity onPress = {() => currentUser ? transition("DASHBOARD", true) : transition("LANDING_PAGE")}>
+          <Image style={{width: 70, height: 70}} source={require('../res/back-button.png')}></Image>
+        </TouchableOpacity>
+      </View>
+
+    </View>
   );
 }
