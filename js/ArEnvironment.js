@@ -10,7 +10,6 @@ import {
   ViroConstants,
   ViroARTrackingTargets,
   ViroARImageMarker,
-  ViroFlexView,
   ViroBox,
   ViroImage,
   ViroNode,
@@ -18,7 +17,8 @@ import {
   Viro3DObject,
   ViroAmbientLight,
   ViroDirectionalLight,
-  ViroAnimations
+  ViroAnimations,
+  ViroFlexView
 } from 'react-viro';
 
 ViroAnimations.registerAnimations({
@@ -91,6 +91,10 @@ export default function ArEnvironment({sceneNavigator}) {
 
     visibility[currentMarker] === undefined ? setVisibility((prev) => ({...prev, [currentMarker]: false})) : null
 
+    let SD = marker.spawned_description
+    let SI = marker.spawned_image
+    let SV = marker.spawned_video
+
     return(
 
       <ViroARImageMarker key={currentMarker} target={currentMarker} onAnchorUpdated={((anchor) => onAnchorUpdated(anchor, currentMarker))}>
@@ -103,7 +107,7 @@ export default function ArEnvironment({sceneNavigator}) {
         <Viro3DObject rotation={[-90, 0, 0]} source={require('./res/object_star_anim.vrx')} position={[0, 0, 0.15]} scale={[0.05, 0.05, 0.05]} 
           type="VRX" onClick={(anchor) => onClick(anchor, currentMarker)} animation={{name:'loopRotate', run:true, loop:true}} />
 
-        <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
+        {/* <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
           {marker.spawned_description !== "" && (
             <ViroText text={marker.spawned_description} scale={[0.3, 0.3, 0.3]} position={[0, 0, -0.1]} style={styles.viroText} />
           )}
@@ -115,11 +119,52 @@ export default function ArEnvironment({sceneNavigator}) {
           {marker.spawned_video !== "" && ( 
             <ViroVideo height={0.8} width={1.4} source={{uri: marker.spawned_video}} loop={true} position={[0,0,0]} scale={[0.2, 0.2, 0.2]} volume={1} />
           )}
+        </ViroNode> */}
+        
+        <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
+
+          {SD !== "" && SI !== "" && SV !== "" && (
+            <>
+              <ViroText position={[0, 0.3, 0]} rotation={[0, 0, 0]} scale={[0.4, 0.4, 0.4]} text={ SD } style={styles.viroText} width={2} height={2}/>
+              <ViroImage position={[-0.4, 0.3, 0]} rotation={[0, 0, 0]} scale={[0.4, 0.4, 0.4]} source={{ uri: SI }} resizeMode={'ScaleToFill'} />
+              <ViroVideo position={[0.4, 0.3, 0]} rotation={[0, 0, 0]} scale={[0.3, 0.3, 0.3]} source={{ uri: SV }} height={0.8} width={1.4}  loop={true}  volume={1} />
+            </>
+          )}
+
+          {SD === "" && SI !== "" && SV !== "" && (
+            <>
+              <ViroImage position={[-0.3, 0.3, 0]} rotation={[0, 45, 0]} scale={[0.5, 0.5, 0.5]} source={{ uri: SI }} resizeMode={'ScaleToFill'} />
+              <ViroVideo position={[0.3, 0.3, 0]} rotation={[0, -45, 0]} scale={[0.4, 0.4, 0.4]} source={{ uri: SV }} height={0.8} width={1.4}  loop={true}  volume={1} />
+            </>
+          )}
+
         </ViroNode>
+
+        {/* <ViroFlexView rotation={[-90, 0, 0]} style = {{flex: 1, flexDirection: 'row', padding: 0.1, justifyContent: 'space-around'}} width={5.0} height={5.0} visible={visibility[currentMarker]}>
+          {marker.spawned_description !== "" && (
+            <ViroFlexView style = {{flex: 1, flexDirection: 'column'}} >
+            <ViroText text={marker.spawned_description} scale={[0.3, 0.3, 0.3]} />
+            </ViroFlexView>
+          )}
+
+          {marker.spawned_image !== "" && (
+            <ViroFlexView style = {{flex: 1, flexDirection: 'column'}} >
+
+            <ViroImage scale={[0.3, 0.3, 0.3]} source={{uri: marker.spawned_image}} resizeMode={'ScaleToFill'} />
+            </ViroFlexView>
+          )}
+
+          {marker.spawned_video !== "" && ( 
+            <ViroFlexView style = {{flex: 1, flexDirection: 'column'}} >
+
+            <ViroVideo height={0.8} width={1.4} source={{uri: marker.spawned_video}} loop={true} scale={[0.2, 0.2, 0.2]} volume={1} />
+            </ViroFlexView>
+          )}
+        </ViroFlexView> */}
 
       </ViroARImageMarker> 
     )
-
+//position={[-0.2,0,0]} 
   })
 
   return (
