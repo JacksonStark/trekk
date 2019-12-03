@@ -145,15 +145,18 @@ var localStyles = StyleSheet.create({
   },
 
   textForm: {
+    paddingBottom: 15,
+    marginBottom: 20,
     marginTop: 20,
-    color: "#858585",
+    color: "white",
     fontSize: 25,
     width: 300,
     textAlign: "center",
     borderBottomColor: "white",
     borderBottomWidth: 2,
     marginBottom: 10,
-    letterSpacing: 3
+    letterSpacing: 1,
+    fontStyle: 'italic'
   },
 
   background: {
@@ -215,7 +218,7 @@ var localStyles = StyleSheet.create({
   },
 
   buttonHolder: {
-    top: "10%"
+    top: "7%"
   },
 
   buttons: {
