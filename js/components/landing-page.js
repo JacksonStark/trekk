@@ -132,7 +132,7 @@ var localStyles = StyleSheet.create({
     textAlign: 'center',
     borderBottomColor: 'white',
     borderBottomWidth: 2,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   errorBox: {
     position: "absolute",

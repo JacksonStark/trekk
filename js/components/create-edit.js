@@ -33,7 +33,7 @@ export default function CreateEdit({
             <Image
               style={[
                 localStyles.image,
-                { marginLeft: "10%", borderColor: "black", borderWidth: 1 }
+                {marginRight: 25, marginLeft: "12%", borderColor: "black", borderWidth: 1 }
               ]}
               source={{ uri: marker.marker_image }}
             />
@@ -87,7 +87,7 @@ export default function CreateEdit({
 
         <Text style={[localStyles.titleText, {marginBottom: "10%"}]}>{currentTrekk.name}</Text>
 
-        <Text style={[localStyles.titleText, {fontSize: 15, width: "95%"} ]}>Marker | Content Spawned</Text>
+        <Text style={[localStyles.titleText, {fontSize: 15, width: "95%", marginBottom: "5%"} ]}>Marker | Content Spawned</Text>
 
         {markers}
 
@@ -158,7 +158,7 @@ var localStyles = StyleSheet.create({
     width: 50,
     height: 50,
     marginTop: 20,
-    marginRight: 15,
+    marginRight: 10,
     marginLeft: 15,
     borderRadius: 10
   },
