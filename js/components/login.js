@@ -190,7 +190,8 @@ var localStyles = StyleSheet.create({
     backgroundColor: "red",
     borderColor: "black",
     borderWidth: 1,
-    opacity: 0.8
+    opacity: 0.8,
+    borderRadius: 20
   },
   errorText: {
     color: "black",
