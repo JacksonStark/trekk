@@ -43,7 +43,7 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
       >
         <ScrollView contentContainerStyle={localStyles.inner}>
           <Image
-            style={{ width: 325, height: 50, marginTop: "15%" }}
+            style={{ width: 325, height: 50, marginTop: "15%", marginBottom: "10%" }}
             source={require("../res/addMarker.png")}
           />
 
@@ -55,7 +55,7 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
             onChangeText={n => {
               setMarkerImage(n);
             }}
-            style={localStyles.text}
+            style={[localStyles.text, {minWidth: 250}]}
             onFocus={() => setError("")}
           />
 
@@ -69,47 +69,47 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
 
           <TextInput
             placeholder="Text"
-            placeholderTextColor="rgba(255,255,255,0.8)"
+            placeholderTextColor="rgba(255,255,255, 0.5)"
             onChangeText={n => {
               setDescription(n);
             }}
-            style={localStyles.text}
+            style={[localStyles.text, {minWidth: 250}]}
           />
 
           <Text style={localStyles.text}>Spawned Image:</Text>
 
           <TextInput
             placeholder="URL"
-            placeholderTextColor="rgba(255,255,255,0.8)"
+            placeholderTextColor="rgba(255,255,255, 0.5)"
             onChangeText={n => {
               setImage(n);
             }}
-            style={localStyles.text}
+            style={[localStyles.text, {minWidth: 250}]}
           />
 
           <Text style={localStyles.text}>Spawned Video:</Text>
 
           <TextInput
             placeholder="URL"
-            placeholderTextColor="rgba(255,255,255,0.8)"
+            placeholderTextColor="rgba(255,255,255, 0.5)"
             onChangeText={n => {
               setVideo(n);
             }}
-            style={localStyles.text}
+            style={[localStyles.text, {minWidth: 250}]}
           />
           <View style={localStyles.buttonsContainer}>
-            <TouchableOpacity
-              onPress={() => transition("CREATE_EDIT", true)}
-              style={[localStyles.buttons, {minWidth: 125}]}
-            >
-              <Text style={localStyles.buttonText}>Back</Text>
-            </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => validate()}
               style={localStyles.buttons}
             >
               <Text style={localStyles.buttonText}>Add Marker</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => transition("CREATE_EDIT", true)}
+              style={[localStyles.buttons, {maxWidth: 125, marginTop: 5}]}
+            >
+              <Text style={[localStyles.buttonText, {fontSize: 25}]}>Back</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -187,8 +187,10 @@ var localStyles = StyleSheet.create({
   },
 
   buttonsContainer: {
+    marginTop: "10%",
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "center",
+    alignItems: 'center'
   },
   errorBox: {
     position: "absolute",
