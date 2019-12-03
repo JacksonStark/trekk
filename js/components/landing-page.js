@@ -42,7 +42,7 @@ const validate = () => {
 
         <ScrollView contentContainerStyle={localStyles.inner} >
           <Image
-            style={{width: 200, height: 35, marginTop: 150, marginBottom: 80}}
+            style={{width: 200, height: 35, marginTop: 100, marginBottom: 80}}
             source={require('../res/trekkLogo.png')}
           />
 
@@ -111,7 +111,7 @@ var localStyles = StyleSheet.create({
   },
   background: {
     width: Dimensions.get("window").width, //for full screen
-    height: Dimensions.get("window").height, //for full screen
+    // height: Dimensions.get("window").height, //for full screen
     position: "absolute",
     top: 0,
     left: 0,
@@ -184,6 +184,7 @@ var localStyles = StyleSheet.create({
     fontSize : 33,
     borderColor: "white",
     letterSpacing: 5,
+    margin: 5
   },
   buttons : {
     // height: 40,
