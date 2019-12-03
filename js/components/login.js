@@ -74,7 +74,7 @@ export default function Login({ transition, switchUser }) {
                 setEmail(email);
               }}
               value={email}
-              placeholderTextColor="#d1d1d1"
+              placeholderTextColor="rgba(255,255,255, 0.5)"
               style={localStyles.textForm}
               onFocus={() => setError("")}
             />
@@ -85,7 +85,7 @@ export default function Login({ transition, switchUser }) {
                 setPassword(password);
               }}
               value={password}
-              placeholderTextColor="#d1d1d1"
+              placeholderTextColor="rgba(255,255,255, 0.5)"
               style={localStyles.textForm}
               secureTextEntry={true}
               onFocus={() => setError("")}
