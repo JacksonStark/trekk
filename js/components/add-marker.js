@@ -48,6 +48,7 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
             placeholderTextColor = "white"
             onChangeText= {(n) => {setMarkerImage(n)}}
             style={localStyles.text}
+            onFocus={() => setError("")}
           />
 
           { error ? (
@@ -88,7 +89,7 @@ export default function AddMarker({transition, addMarker, currentTrekk}) {
           </TouchableOpacity>
 
           <TouchableOpacity 
-          onPress={() => addMarker(markerImage, description, image, video, currentTrekk)}
+          onPress={() => validate()}
           style={localStyles.buttons}
           >
             <Text style = {localStyles.buttonText}>Add Marker</Text>
@@ -167,8 +168,7 @@ var localStyles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around'
-  }
-
+  },
   errorBox: {    
     position: "absolute",
     bottom: "2%",
@@ -176,12 +176,12 @@ var localStyles = StyleSheet.create({
     backgroundColor: "red",
     borderColor: "black",
     borderWidth: 1,
-    opacity: 0.8
+    opacity: 0.8,
+    borderRadius: 20
   },
   errorText: {    
     color: "black",
     fontStyle: "italic",
     fontSize: 16
   },
-
 })

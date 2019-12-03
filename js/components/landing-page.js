@@ -71,7 +71,8 @@ const validate = () => {
             </Text>
 
             <TextInput
-                placeholder = "Enter Access Code"
+                placeholder = "Enter Here"
+                placeholderTextColor = "rgba(255,255,255, 0.5)"
                 onChangeText= {(n) => {setAccessCode(n)}}
                 style={localStyles.textForm}
                 onFocus={() => setError("")}
@@ -196,9 +197,8 @@ var localStyles = StyleSheet.create({
   button2 : {
     // height: 60,
     // width: 150,
-    paddingTop:5,
-    paddingBottom:5,
-    marginTop: 10,
+    padding: 5,
+    marginTop: 15,
     marginBottom: 10,
     backgroundColor:'transparent',
     borderRadius: 10,
