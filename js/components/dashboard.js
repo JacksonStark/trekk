@@ -53,19 +53,19 @@ export default function Dashboard({
         <View style={localStyles.swipe_items}>
           {/* <Text style={[localStyles.text, {backgroundColor: "rgb(46,134,193)"}]}>{trekk.access_code}</Text> */}
           <Text
-            style={[localStyles.text, { backgroundColor: "#52a6bf" }]}
+            style={[localStyles.text, { backgroundColor: "#52a6bf", color: "black", borderColor: "black" }]}
             onPress={() => printToClipboard(trekk.access_code)}
           >
             Access Code
           </Text>
           <Text
-            style={[localStyles.text, { backgroundColor: "#bfa952" }]}
+            style={[localStyles.text, { backgroundColor: "#bfa952", color: "black", borderColor: "black" }]}
             onPress={() => switchTrekk(trekk, "CREATE_EDIT")}
           >
             Edit
           </Text>
           <Text
-            style={[localStyles.text, { backgroundColor: "#bf5252" }]}
+            style={[localStyles.text, { backgroundColor: "#bf5252", color: "black", borderColor: "black" }]}
             onPress={() => deleteTrekk(trekk.id)}
           >
             Delete
@@ -137,7 +137,7 @@ export default function Dashboard({
                       setName(name);
                     }}
                     value={name}
-                    placeholderTextColor="#d1d1d1"
+                    placeholderTextColor="rgba(255,255,255, 0.5)"
                     style={[
                       localStyles.text,
                       {
@@ -230,13 +230,13 @@ var localStyles = StyleSheet.create({
 
   text: {
     marginTop: 10,
-    color: "black",
+    color: "white",
     fontSize: 25,
     fontStyle: "italic",
     backgroundColor: "transparent",
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "white",
     padding: 5,
     overflow: "hidden"
   },

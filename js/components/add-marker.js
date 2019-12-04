@@ -55,7 +55,7 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
             onChangeText={n => {
               setMarkerImage(n);
             }}
-            style={[localStyles.text, {minWidth: 250}]}
+            style={[localStyles.text, {minWidth: 250, fontWeight: "200", borderBottomColor: "white", borderBottomWidth: 2}]}
             onFocus={() => setError("")}
           />
 
@@ -73,7 +73,7 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
             onChangeText={n => {
               setDescription(n);
             }}
-            style={[localStyles.text, {minWidth: 250}]}
+            style={[localStyles.text, {minWidth: 250, fontWeight: "200", borderBottomColor: "white", borderBottomWidth: 2}]}
           />
 
           <Text style={localStyles.text}>Spawned Image:</Text>
@@ -84,7 +84,7 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
             onChangeText={n => {
               setImage(n);
             }}
-            style={[localStyles.text, {minWidth: 250}]}
+            style={[localStyles.text, {minWidth: 250, fontWeight: "200", borderBottomColor: "white", borderBottomWidth: 2}]}
           />
 
           <Text style={localStyles.text}>Spawned Video:</Text>
@@ -95,7 +95,7 @@ export default function AddMarker({ transition, addMarker, currentTrekk }) {
             onChangeText={n => {
               setVideo(n);
             }}
-            style={[localStyles.text, {minWidth: 250}]}
+            style={[localStyles.text, {minWidth: 250, fontWeight: "200", borderBottomColor: "white", borderBottomWidth: 2}]}
           />
           <View style={localStyles.buttonsContainer}>
 
@@ -141,16 +141,17 @@ var localStyles = StyleSheet.create({
     bottom: 0
   },
   text: {
+    marginVertical: 15,
     marginLeft: "5%",
     marginRight: "5%",
     textTransform: "uppercase",
-    fontWeight: "200",
     backgroundColor: "transparent",
     color: "white",
     textAlign: "center",
     fontSize: 25,
     borderColor: "white",
-    letterSpacing: 5
+    letterSpacing: 5,
+    fontWeight: "300"
   },
   titleText: {
     color: "cyan",
