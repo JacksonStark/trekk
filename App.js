@@ -40,8 +40,6 @@ export default function ViroSample() {
     currentMarkers: ""
   })
 
-  console.log("UPDATED HISTORY: ", history);
-
   const transition = (nextMode, back = false) => {
     if (back) {
       let prevHistory = history.slice(0, -1);
@@ -63,14 +61,6 @@ export default function ViroSample() {
         transition('DASHBOARD')
       })
     }
-
-    // if (state.currentTrekk.id && state.currentUser) {
-    //   axios.get(`http://trekk.herokuapp.com/markers/${state.currentTrekk.id}`)
-    //   .then((res) => {
-    //     dispatch({type:SET_MARKERS, value: res.data.markers})
-    //     transition('CREATE_EDIT')
-    //   })
-    // }
   }, [state.currentUser])
 
   const switchUser = (id) => {
@@ -109,13 +99,12 @@ export default function ViroSample() {
         transition('CREATE_EDIT')
     })
   }
-  // console.log('CURRENT TREKK ID: ', state.currentTrekk)
 
   const refreshDashboard = () => {
-    dispatch({type: SET_TREKK, value: ""})
-    dispatch({type: SET_MARKERS, value: ""})
     axios.get(`http://trekk.herokuapp.com/trekks/${state.currentUser}`)
     .then((res) => {
+      dispatch({type: SET_TREKK, value: ""})
+      dispatch({type: SET_MARKERS, value: ""})
       dispatch({type:SET_USER_TREKKS, value: res.data.trekks})
       transition('DASHBOARD')
     })
@@ -134,7 +123,6 @@ export default function ViroSample() {
   const deleteMarker = (id) => {
     axios.delete(`http://trekk.herokuapp.com/markers?marker_id=${id}&trekk_id=${state.currentTrekk.id}`)
     .then((res) => {
-      console.log(res.data)
       dispatch({type: 'SET_MARKERS', value: ""})
       dispatch({type: 'SET_MARKERS', value: res.data.markers})
       transition('CREATE_EDIT')

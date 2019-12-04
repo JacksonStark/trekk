@@ -14,7 +14,6 @@ import {
   Alert,
   Image
 } from "react-native";
-//  import SwipeableViews from 'react-swipeable-views-native';
 import SwipeableViews from "react-swipeable-views-native/lib/SwipeableViews.scroll";
 
 export default function Dashboard({
@@ -51,7 +50,6 @@ export default function Dashboard({
         </View>
 
         <View style={localStyles.swipe_items}>
-          {/* <Text style={[localStyles.text, {backgroundColor: "rgb(46,134,193)"}]}>{trekk.access_code}</Text> */}
           <Text
             style={[localStyles.text, { backgroundColor: "#52a6bf", color: "black", borderColor: "black" }]}
             onPress={() => printToClipboard(trekk.access_code)}
@@ -201,12 +199,6 @@ var localStyles = StyleSheet.create({
     marginBottom: "10%",
     marginTop: "15%"
   },
-  // swipe: {
-  //   flex : 1,
-  //   flexDirection: 'column',
-  //   alignItems:'center',
-  //   backgroundColor: "transparent",
-  // },
   swipe_items: {
     flex: 1,
     flexDirection: "row",
@@ -215,8 +207,7 @@ var localStyles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   background: {
-    width: Dimensions.get("window").width, //for full screen
-    // height: Dimensions.get("window").height, //for full screen
+    width: Dimensions.get("window").width,
     position: "absolute",
     top: 0,
     left: 0,

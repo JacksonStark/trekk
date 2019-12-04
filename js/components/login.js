@@ -25,8 +25,6 @@ export default function Login({ transition, switchUser }) {
   collector["email"] = email;
   collector["password"] = password;
 
-  console.log("EMAIL: ", email, "PASSWORD: ", password);
-
   const validate = () => {
     password ? null : setError("Please enter a password.");
     email ? null : setError("Please enter an email.");
@@ -45,7 +43,6 @@ export default function Login({ transition, switchUser }) {
           ? switchUser(res.data.user_id)
           : setError("Your email or password is invalid");
       })
-      .catch(err => console.log(err));
   };
 
   return (
@@ -160,8 +157,7 @@ var localStyles = StyleSheet.create({
   },
 
   background: {
-    width: Dimensions.get("window").width, //for full screen
-    // height: Dimensions.get("window").height, //for full screen
+    width: Dimensions.get("window").width,
     position: "absolute",
     top: 0,
     left: 0,
