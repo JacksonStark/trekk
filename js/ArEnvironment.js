@@ -25,39 +25,21 @@ ViroAnimations.registerAnimations({
   loopRotate: {properties: {rotateZ: "+=45"}, duration: 250},
 });
 
-// const userMarkers = [
-//   {
-//     id: 1,
-//     markerImage: 'https://img.ev.mu/images/regions/91/600x400/91.jpg',
-//     spawnedDescription: "This is Guadalupe. TITS",
-//     spawnedImage: null,
-//     spawnedVideo: null
-//   },
-// ]
 
 let cameraPos;
 
 export default function ArEnvironment({sceneNavigator}) {
-  // const [text, setText] = useState("Initializing AR...")
   const [visibility, setVisibility] = useState({})
-
-  // const onInitialized = (state, reason) => {
-  //   if (state == ViroConstants.TRACKING_NORMAL) {
-  //     setText('Hi there! Welcome to Jackson, Frank, and Adam\'s AR tour. Have fun and give feedback!')
-  //   } else if (state == ViroConstants.TRACKING_NONE) {
-  //     Handle loss of tracking
-  //   }
-  // }
 
   const onAnchorUpdated = (anchor, currentMarker) => {
 
-    // console.log('Marker--Camera Distance', Math.abs(anchor.position[2] - cameraPos[2]))
+    console.log('Marker--Camera Distance', Math.abs(anchor.position[2] - cameraPos[2]))
 
-  //   Math.abs(anchor.position[0] - cameraPos[0]) < 0.8 &&
-  //   Math.abs(anchor.position[1] - cameraPos[1]) < 0.8 &&
-  //   Math.abs(anchor.position[2] - cameraPos[2]) < 0.8
-  //   ? setVisibility((prev) => ({...prev, [currentMarker]: true}))
-  //   : setVisibility((prev) => ({...prev, [currentMarker]: false}))
+    Math.abs(anchor.position[0] - cameraPos[0]) < 0.8 &&
+    Math.abs(anchor.position[1] - cameraPos[1]) < 0.8 &&
+    Math.abs(anchor.position[2] - cameraPos[2]) < 0.8
+    ? setVisibility((prev) => ({...prev, [currentMarker]: true}))
+    : setVisibility((prev) => ({...prev, [currentMarker]: false}))
 
   }
 
@@ -71,12 +53,9 @@ export default function ArEnvironment({sceneNavigator}) {
     visibility[currentMarker]
     ? setVisibility((prev) => ({...prev, [currentMarker]: false}))
     : setVisibility((prev) => ({...prev, [currentMarker]: true}))
-
-    // show ? setShow(false) : setShow(true)
   }
 
   const imageMarkers = sceneNavigator.viroAppProps.map((marker, index) => {
-  // const imageMarkers = userMarkers.map((marker, index) => {
     let currentMarker = 'marker' + index
 
     let targetObj = {}
@@ -92,7 +71,7 @@ export default function ArEnvironment({sceneNavigator}) {
     visibility[currentMarker] === undefined ? setVisibility((prev) => ({...prev, [currentMarker]: false})) : null
 
     let SD = marker.spawned_description
-    let SI = marker.spawned_image
+    let SI = ""
     let SV = marker.spawned_video
 
     return(
@@ -107,64 +86,53 @@ export default function ArEnvironment({sceneNavigator}) {
         <Viro3DObject rotation={[-90, 0, 0]} source={require('./res/object_star_anim.vrx')} position={[0, 0, 0.15]} scale={[0.05, 0.05, 0.05]} 
           type="VRX" onClick={(anchor) => onClick(anchor, currentMarker)} animation={{name:'loopRotate', run:true, loop:true}} />
 
-        {/* <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
-          {marker.spawned_description !== "" && (
-            <ViroText text={marker.spawned_description} scale={[0.3, 0.3, 0.3]} position={[0, 0, -0.1]} style={styles.viroText} />
-          )}
-
-          {marker.spawned_image !== "" && (
-            <ViroImage position={[0,0,0]} scale={[0.3, 0.3, 0.3]} source={{uri: marker.spawned_image}} resizeMode={'ScaleToFill'} />
-          )}
-
-          {marker.spawned_video !== "" && ( 
-            <ViroVideo height={0.8} width={1.4} source={{uri: marker.spawned_video}} loop={true} position={[0,0,0]} scale={[0.2, 0.2, 0.2]} volume={1} />
-          )}
-        </ViroNode> */}
-        
-        <ViroNode position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
+        <ViroFlexView position={[0,0,0]} rotation={[-90, 0, 0]} dragType="FixedToWorld" onDrag={()=>{}} visible={visibility[currentMarker]}>
 
           {SD !== "" && SI !== "" && SV !== "" && (
             <>
-              <ViroText position={[0, 0.3, 0]} rotation={[0, 0, 0]} scale={[0.4, 0.4, 0.4]} text={ SD } style={styles.viroText} width={2} height={2}/>
-              <ViroImage position={[-0.4, 0.3, 0]} rotation={[0, 0, 0]} scale={[0.4, 0.4, 0.4]} source={{ uri: SI }} resizeMode={'ScaleToFill'} />
-              <ViroVideo position={[0.4, 0.3, 0]} rotation={[0, 0, 0]} scale={[0.3, 0.3, 0.3]} source={{ uri: SV }} height={0.8} width={1.4}  loop={true}  volume={1} />
+              <ViroText position={[-0.5, 0.05, 0.2]} rotation={[0, 45, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
+              <ViroImage position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />
+              <ViroVideo position={[0.5, 0.05, 0.2]} rotation={[0, -45, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
+            </>
+          )}
+
+          {SD !== "" && SI !== "" && SV === "" && (
+            <>
+              <ViroText position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
+              <ViroImage position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />
+            </>
+          )}
+
+          {SD !== "" && SI === "" && SV !== "" && (
+            <>
+              <ViroText position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
+              <ViroVideo position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
             </>
           )}
 
           {SD === "" && SI !== "" && SV !== "" && (
             <>
-              <ViroImage position={[-0.3, 0.3, 0]} rotation={[0, 45, 0]} scale={[0.5, 0.5, 0.5]} source={{ uri: SI }} resizeMode={'ScaleToFill'} />
-              <ViroVideo position={[0.3, 0.3, 0]} rotation={[0, -45, 0]} scale={[0.4, 0.4, 0.4]} source={{ uri: SV }} height={0.8} width={1.4}  loop={true}  volume={1} />
+              <ViroImage position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />
+              <ViroVideo position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
             </>
           )}
 
-        </ViroNode>
-
-        {/* <ViroFlexView rotation={[-90, 0, 0]} style = {{flex: 1, flexDirection: 'row', padding: 0.1, justifyContent: 'space-around'}} width={5.0} height={5.0} visible={visibility[currentMarker]}>
-          {marker.spawned_description !== "" && (
-            <ViroFlexView style = {{flex: 1, flexDirection: 'column'}} >
-            <ViroText text={marker.spawned_description} scale={[0.3, 0.3, 0.3]} />
-            </ViroFlexView>
+          {SD !== "" && SI === "" && SV === "" && (
+              <ViroText position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
           )}
 
-          {marker.spawned_image !== "" && (
-            <ViroFlexView style = {{flex: 1, flexDirection: 'column'}} >
-
-            <ViroImage scale={[0.3, 0.3, 0.3]} source={{uri: marker.spawned_image}} resizeMode={'ScaleToFill'} />
-            </ViroFlexView>
+          {SD === "" && SI !== "" && SV === "" && (
+              <ViroImage position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />        
           )}
 
-          {marker.spawned_video !== "" && ( 
-            <ViroFlexView style = {{flex: 1, flexDirection: 'column'}} >
-
-            <ViroVideo height={0.8} width={1.4} source={{uri: marker.spawned_video}} loop={true} scale={[0.2, 0.2, 0.2]} volume={1} />
-            </ViroFlexView>
+          {SD === "" && SI === "" && SV !== "" && (
+              <ViroVideo position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
           )}
-        </ViroFlexView> */}
+
+        </ViroFlexView>
 
       </ViroARImageMarker> 
     )
-//position={[-0.2,0,0]} 
   })
 
   return (
@@ -175,16 +143,12 @@ export default function ArEnvironment({sceneNavigator}) {
 
 }
 
-//onTrackingUpdated={onInitialized} 
-
-
 var styles = StyleSheet.create({
   viroText: {
     fontFamily: 'Arial',
-    fontSize: 15,
-    color: '#ff0000',
+    fontSize: 40,
+    color: '#cc0000',
     textAlignVertical: 'center',
     textAlign: 'center',  
   }
 });
-

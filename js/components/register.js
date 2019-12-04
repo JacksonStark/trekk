@@ -158,8 +158,7 @@ var localStyles = StyleSheet.create({
   },
 
   background: {
-    width: Dimensions.get("window").width, //for full screen
-    // height: Dimensions.get("window").height, //for full screen
+    width: Dimensions.get("window").width,
     position: "absolute",
     top: 0,
     left: 0,

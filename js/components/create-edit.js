@@ -22,11 +22,11 @@ export default function CreateEdit({
   goToAddMarker,
   deleteMarker
 }) {
-  // console.log('CURRENT TREKK (create-edit.js)', currentTrekk);
+
   let markers = [];
+
   if (currentMarkers) {
     markers = currentMarkers.map(marker => {
-      // console.log('IN CREATE-EDIT:', marker.spawned_description)
       return (
         <SwipeableViews>
           <View style={localStyles.swipe_items}>

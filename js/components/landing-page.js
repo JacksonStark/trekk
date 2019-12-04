@@ -110,8 +110,7 @@ var localStyles = StyleSheet.create({
     alignItems:'center',
   },
   background: {
-    width: Dimensions.get("window").width, //for full screen
-    // height: Dimensions.get("window").height, //for full screen
+    width: Dimensions.get("window").width,
     position: "absolute",
     top: 0,
     left: 0,
@@ -150,22 +149,14 @@ var localStyles = StyleSheet.create({
     fontSize: 16
   },
   loginRegister: {
-    // flex:1,
-    // paddingTop: "20%",
     paddingTop: 20,
     paddingBottom: 10,
     margin: 10,
-    // top: "3%",
-    // top: 10,
     backgroundColor: "transparent",
   },
   accessButtonHolder: {
-    // flex: 1,
-    // top: "8%",
-    // top: 24,
     marginTop: 80,
     alignItems:'center',
-    // justifyContent: 'flex-end'
   },
   titleText: {
     color: "cyan",
@@ -177,7 +168,6 @@ var localStyles = StyleSheet.create({
   },
   buttonText: {
     fontWeight: "100",
-    // fontWeight: "bold",
     backgroundColor:'transparent',
     color: 'white',
     textAlign:'center',
@@ -187,17 +177,9 @@ var localStyles = StyleSheet.create({
     margin: 5
   },
   buttons : {
-    // height: 40,
-    // width: 300,
-    // paddingTop:5,
-    // paddingBottom:5,
-    // marginTop: 50,
     marginBottom: 15,
-    // backgroundColor:'transparent',
   },
   button2 : {
-    // height: 60,
-    // width: 150,
     padding: 5,
     marginTop: 15,
     marginBottom: 10,
