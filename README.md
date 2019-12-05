@@ -33,7 +33,7 @@ Trekk is a mobile application that allows users to create and share custom augme
 
 ### A marker is unique in that it spawns the specific media a User assigned to it.
 
-!["A marker is unique in that it spawns the specific media a User assigned to it."](https://media.giphy.com/media/mFlBvNrWuU9bxrKRbm/giphy.gif)
+!["A marker is unique in that it spawns the specific media a User assigned to it."](https://media.giphy.com/media/J5SNU4zC33NlB9eRfF/giphy.gif)
 
 ### Access a Trekk without an account via an Access Code. 
 
@@ -78,6 +78,7 @@ To access the codebase for the back-end of Trekk (trekk-api), simply click [here
 
 
 ## Dependencies
+  ```
   react: 16.8.3,
   react-native: ^0.59.9,
   react-viro: 2.17.0
@@ -86,6 +87,7 @@ To access the codebase for the back-end of Trekk (trekk-api), simply click [here
   react-native-elements: ^1.2.7,
   react-native-vector-icons: ^6.6.0,
   react-swipeable-views-native: ^0.13.2,
+  ```
 
 ## Contributions
   This app was created and pair programmed by...
