@@ -1,4 +1,4 @@
-# Trekk Project
+# Trekk
 
 ## Table Of Contents
 
