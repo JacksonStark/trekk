@@ -59,7 +59,7 @@ export default function CreateEdit({
             )}
           </View>
 
-          <View style={{ flex: 1, alignItems: "center" }}>
+          <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
             <Text
               style={[localStyles.text, { backgroundColor: "rgb(231,76,60)" }]}
               onPress={() => deleteMarker(marker.id)}

@@ -72,7 +72,7 @@ export default function ViroSample() {
     .then((res) => {
       dispatch({type: SET_TREKK, value: trekk})
       dispatch({type: SET_MARKERS, value: res.data.markers})
-      transition(destination);
+      transition(destination)
     })
   }
 
@@ -142,6 +142,9 @@ export default function ViroSample() {
     transition('AR_SCENE')
   }
 
+  console.disableYellowBox = true;
+  console.reportErrorsAsExceptions = false;
+
   return (
     <>
       {mode === LANDING_PAGE && (<LandingPage transition = {transition} localStyles = {localStyles} guestArScene = {guestArScene} />)}
@@ -149,7 +152,6 @@ export default function ViroSample() {
       {mode === REGISTER && (<Register transition = {transition} switchUser = {switchUser} localStyles = {localStyles} />)}
       {mode === DASHBOARD && (<Dashboard logout = {logout} addTrekk = {addTrekk} switchTrekk = {switchTrekk} deleteTrekk = {deleteTrekk} localStyles = {localStyles} userTrekks = {state.userTrekks} />)}
       {mode === CREATE_EDIT && (<CreateEdit deleteMarker= {deleteMarker} goToAddMarker= {goToAddMarker} currentMarkers = {state.currentMarkers} refreshDashboard = {refreshDashboard} localStyles = {localStyles} currentUser = {state.currentUser} currentTrekk = {state.currentTrekk} />)}
-      {/* {mode === EDIT && (<Edit transition = {transition} localStyles = {localStyles} />)} */}
       {mode === ADD_MARKER && (<AddMarker addMarker = {addMarker} transition = {transition} currentTrekk = {state.currentTrekk.id} localStyles = {localStyles} />)}
       {mode === AR_SCENE && (<ArScene transition = {transition} localStyles = {localStyles} userMarkers = {state.currentMarkers} currentUser = {state.currentUser} />)}
     </>
