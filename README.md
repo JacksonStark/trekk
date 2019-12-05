@@ -29,7 +29,7 @@ Trekk is a mobile application that allows users to create and share custom augme
 
 ### Within a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception.
 
-!["SWithin a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception."](https://media.giphy.com/media/gkQQp91BqgcFQgXFnl/giphy.gif)
+!["Within a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception."](https://media.giphy.com/media/gkQQp91BqgcFQgXFnl/giphy.gif)
 
 ### A marker is unique in that it spawns the specific media a User assigned to it.
 
@@ -37,19 +37,19 @@ Trekk is a mobile application that allows users to create and share custom augme
 
 ### Access a Trekk without an account via an Access Code. 
 
-!["Access Trekk without account via Access Code."](https://media.giphy.com/media/lmuVuuRTuH693S2mC0/giphy.gif)
+!["Access a Trekk without an account via an Access Code."](https://media.giphy.com/media/lmuVuuRTuH693S2mC0/giphy.gif)
 
 ### Login or Register to view and create your Trekks.
 
-!["Login/Register to view and create Trekks."](https://media.giphy.com/media/YkzJGTpLNLAqz5CwcJ/giphy.gif)
+!["Login or Register to view and create your Trekks."](https://media.giphy.com/media/YkzJGTpLNLAqz5CwcJ/giphy.gif)
 
 ### Swipe to copy an Access Code or create a new Trekk.
 
-!["Swipe to copy Access Code or create new Trekk."](https://media.giphy.com/media/M9mW6Z6kNOQSCQO4lw/giphy.gif)
+!["Swipe to copy an Access Code or create a new Trekk."](https://media.giphy.com/media/M9mW6Z6kNOQSCQO4lw/giphy.gif)
 
 ### View a current Trekk's markers and the media that they spawn.
 
-!["View a current Trekks markers and the media they spawn."](https://media.giphy.com/media/VJrexALHccvvmXEHq4/giphy.gif)
+!["View a current Trekk's markers and the media that they spawn."](https://media.giphy.com/media/VJrexALHccvvmXEHq4/giphy.gif)
 
 ### Edit a Trekk to add markers and attach media.
 
