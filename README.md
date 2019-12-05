@@ -1,4 +1,4 @@
-# Mapplication Project
+# Trekk Project
 
 ## Table Of Contents
 
@@ -26,43 +26,70 @@ Trekk is a mobile application that allows users to create and share custom augme
 - Javascript 
 
 ## Final Product
- !["Intuitive interface to start creating custom maps"](public/docs/create-map.png)
-  !["Place markers on custom locations!"](public/docs/map-markers.png)
-  !["Access your maps later or discover other users maps!"](public/docs/my-maps.png)
+
+### Within a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception.
+
+!["SWithin a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception."](https://media.giphy.com/media/gkQQp91BqgcFQgXFnl/giphy.gif)
+
+### A marker is unique in that it spawns the specific media a User assigned to it.
+
+!["A marker is unique in that it spawns the specific media a User assigned to it."](https://media.giphy.com/media/mFlBvNrWuU9bxrKRbm/giphy.gif)
+
+### Access a Trekk without an account via an Access Code. 
+
+!["Access Trekk without account via Access Code."](https://media.giphy.com/media/lmuVuuRTuH693S2mC0/giphy.gif)
+
+### Login or Register to view and create your Trekks.
+
+!["Login/Register to view and create Trekks."](https://media.giphy.com/media/YkzJGTpLNLAqz5CwcJ/giphy.gif)
+
+### Swipe to copy an Access Code or create a new Trekk.
+
+!["Swipe to copy Access Code or create new Trekk."](https://media.giphy.com/media/M9mW6Z6kNOQSCQO4lw/giphy.gif)
+
+### View a current Trekk's markers and the media that they spawn.
+
+!["View a current Trekks markers and the media they spawn."](https://media.giphy.com/media/VJrexALHccvvmXEHq4/giphy.gif)
+
+### Edit a Trekk to add markers and attach media.
+
+!["Edit a Trekk to add markers and attach media."](https://media.giphy.com/media/eKguefGrz63aP2ygbe/giphy.gif)
 
 
 
 
 ## Getting Started
-Simply click [here](https://mappifyy.herokuapp.com/login/4)
 
-or to run project locally ...
+Our Ruby on Rails/PostgreSQL database and back-end logic is hosted on Heroku.
 
-1. Clone this repository.
-2. Install dependencies using the `npm install` command.
+To access the codebase for the back-end of Trekk (trekk-api), simply click [here](https://github.com/JacksonStark/trekk-api).
+ 
 
-3. Connect to `psql` in the terminal and create tables by running command `\i db/schema/midterm.sql`  and create test users by running `\i db/seeds/01_users.sql`
-      - Not sure how to set up a database ?  See, [postgres docs](https://www.postgresql.org/docs/)
-   
-4. Start the web server using the `npm run local` command. The app will be served at <http://localhost:8080/>.
+1. Clone this repo and follow these steps:
+- `cd trekk`
+- `npm install`
+- `npm start`
 
-5. Go to <http://localhost:8080/> in your browser.
+2. Download the ViroMedia app on your mobile app store.
+
+3. Copy the Ngrok link inside your terminal and enter it into the Testbed input within the ViroMedia app.
+
+4. Have fun and be creative!
+
 
 ## Dependencies
-    body-parser: ^1.19.0
-    chalk: ^2.4.2
-    cookie-session: ^1.3.3
-    dotenv: ^2.0.0
-    ejs: ^2.6.2
-    express: ^4.17.1
-    morgan: ^1.9.1
-    node-sass-middleware: ^0.11.0
-    pg: ^6.4.2
-    pg-native: ^3.0.0
+  react: 16.8.3,
+  react-native: ^0.59.9,
+  react-viro: 2.17.0
+  axios: ^0.19.0,
+  ngrok: ^3.2.5,
+  react-native-elements: ^1.2.7,
+  react-native-vector-icons: ^6.6.0,
+  react-swipeable-views-native: ^0.13.2,
 
 ## Contributions
-  This app was created by...
+  This app was created and pair programmed by...
 
-- https://github.com/umrude
-- https://github.com/curriecode
+- https://github.com/adamleseur
+- https://github.com/FrankZou21
 - https://github.com/JacksonStark

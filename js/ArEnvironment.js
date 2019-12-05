@@ -33,13 +33,15 @@ export default function ArEnvironment({sceneNavigator}) {
 
   const onAnchorUpdated = (anchor, currentMarker) => {
 
-    console.log('Marker--Camera Distance', Math.abs(anchor.position[2] - cameraPos[2]))
+    // FOR DEBUGGING PURPOSES...
 
-    Math.abs(anchor.position[0] - cameraPos[0]) < 0.8 &&
-    Math.abs(anchor.position[1] - cameraPos[1]) < 0.8 &&
-    Math.abs(anchor.position[2] - cameraPos[2]) < 0.8
-    ? setVisibility((prev) => ({...prev, [currentMarker]: true}))
-    : setVisibility((prev) => ({...prev, [currentMarker]: false}))
+    // console.log('Marker--Camera Distance', Math.abs(anchor.position[2] - cameraPos[2]))
+
+    // Math.abs(anchor.position[0] - cameraPos[0]) < 0.8 &&
+    // Math.abs(anchor.position[1] - cameraPos[1]) < 0.8 &&
+    // Math.abs(anchor.position[2] - cameraPos[2]) < 0.8
+    // ? setVisibility((prev) => ({...prev, [currentMarker]: true}))
+    // : setVisibility((prev) => ({...prev, [currentMarker]: false}))
 
   }
 
@@ -71,7 +73,7 @@ export default function ArEnvironment({sceneNavigator}) {
     visibility[currentMarker] === undefined ? setVisibility((prev) => ({...prev, [currentMarker]: false})) : null
 
     let SD = marker.spawned_description
-    let SI = ""
+    let SI = marker.spawned_image
     let SV = marker.spawned_video
 
     return(
@@ -90,39 +92,39 @@ export default function ArEnvironment({sceneNavigator}) {
 
           {SD !== "" && SI !== "" && SV !== "" && (
             <>
-              <ViroText position={[-0.5, 0.05, 0.2]} rotation={[0, 45, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
-              <ViroImage position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />
+              <ViroText position={[-0.5, 0.05, 0.2]} rotation={[0, 45, 0]} scale={[0.1, 0.1]} text={SD} style={styles.viroText} height={5} width={5} /> 
+              <ViroImage position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SI }} />
               <ViroVideo position={[0.5, 0.05, 0.2]} rotation={[0, -45, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
             </>
           )}
 
           {SD !== "" && SI !== "" && SV === "" && (
             <>
-              <ViroText position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
-              <ViroImage position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />
+              <ViroText position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.1]} text={SD} style={styles.viroText} height={5} width={5} /> 
+              <ViroImage position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SI }} />
             </>
           )}
 
           {SD !== "" && SI === "" && SV !== "" && (
             <>
-              <ViroText position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
+              <ViroText position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.1]} text={SD} style={styles.viroText} height={5} width={5} /> 
               <ViroVideo position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
             </>
           )}
 
           {SD === "" && SI !== "" && SV !== "" && (
             <>
-              <ViroImage position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />
+              <ViroImage position={[-0.25, 0.05, 0]} rotation={[0, 20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SI }} />
               <ViroVideo position={[0.25, 0.05, 0]} rotation={[0, -20, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SV }}  loop={true}  volume={1} />
             </>
           )}
 
           {SD !== "" && SI === "" && SV === "" && (
-              <ViroText position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.1]} text="Hello, welcome to our AR tour, we worked night and day to bring you our best product, hope you enjoy, and feel free to donate. If you are here for McDonalds its two blocks down and on your left, OK :)" style={styles.viroText} height={5} width={5} /> 
+              <ViroText position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.1]} text={SD} style={styles.viroText} height={5} width={5} /> 
           )}
 
           {SD === "" && SI !== "" && SV === "" && (
-              <ViroImage position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: 'https://images.complex.com/complex/images/c_limit,dpr_auto,q_90,w_720/fl_lossy,pg_1/o4adpfwd3m5041chd8k5/wendy-william-sirius' }} />        
+              <ViroImage position={[0, 0.05, 0]} rotation={[0, 0, 0]} scale={[0.1, 0.066]} height={5} width={5} source={{ uri: SI }} />        
           )}
 
           {SD === "" && SI === "" && SV !== "" && (
