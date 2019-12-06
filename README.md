@@ -53,7 +53,7 @@ Trekk is a mobile application that allows users to create and share custom augme
 
 ### Edit a Trekk to add markers and attach media.
 
-!["Edit a Trekk to add markers and attach media."](https://media.giphy.com/media/eKguefGrz63aP2ygbe/giphy.gif)
+!["Edit a Trekk to add markers and attach media."](https://media.giphy.com/media/lOakwzVOI9dqx830oJ/giphy.gif)
 
 
 
