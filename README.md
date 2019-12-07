@@ -27,11 +27,11 @@ Trekk is a mobile application that allows users to create and share custom augme
 
 ## Final Product
 
-### Within a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception.
+### Within a Trekk, the camera recognizes a marker, records its coordinates, spawns a star, and anchors it into scene with precision using depth perception.
 
 !["Within a Trekk, the camera recognizes a marker, records its coordinates, and anchors it into scene with precision using depth perception."](https://media.giphy.com/media/gkQQp91BqgcFQgXFnl/giphy.gif)
 
-### A marker is unique in that it spawns the specific media a User assigned to it.
+### The star that a marker spawns is unique in that it spawns the specific media a User assigned to it.
 
 !["A marker is unique in that it spawns the specific media a User assigned to it."](https://media.giphy.com/media/J5SNU4zC33NlB9eRfF/giphy.gif)
 
@@ -47,11 +47,11 @@ Trekk is a mobile application that allows users to create and share custom augme
 
 !["Swipe to copy an Access Code or create a new Trekk."](https://media.giphy.com/media/M9mW6Z6kNOQSCQO4lw/giphy.gif)
 
-### View a current Trekk's markers and the media that they spawn.
+### View your current Trekk's markers and the media that they spawn.
 
 !["View a current Trekk's markers and the media that they spawn."](https://media.giphy.com/media/VJrexALHccvvmXEHq4/giphy.gif)
 
-### Edit a Trekk to add markers and attach media.
+### Edit your Trekk to add markers and attach media.
 
 !["Edit a Trekk to add markers and attach media."](https://media.giphy.com/media/lOakwzVOI9dqx830oJ/giphy.gif)
 
